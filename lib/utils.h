@@ -1,5 +1,5 @@
-#ifndef AOC23_UTILS_H
-#define AOC23_UTILS_H
+#ifndef AOC24_UTILS_H
+#define AOC24_UTILS_H
 
 #include <string>
 #include <vector>
@@ -17,4 +17,4 @@ std::string join(const std::vector<std::string>& v);
 uint64_t gcd(uint64_t a, uint64_t b);
 uint64_t lcd(uint64_t a, uint64_t b);
 
-#endif  // AOC23_UTILS_H
+#endif  // AOC24_UTILS_H
