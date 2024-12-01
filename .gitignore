@@ -1,3 +1,7 @@
+# Project stuff
+.idea
+*build*/
+
 # Prerequisites
 *.d
 
