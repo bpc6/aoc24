@@ -4,7 +4,7 @@
 #include <iterator>
 #include <sstream>
 
-std::string readFile(const std::string& file_path) {
+std::string readFile(const std::string &file_path) {
   std::ifstream file(file_path);
   if (!file.is_open()) {
     throw std::runtime_error("Error opening the file.");
@@ -14,7 +14,7 @@ std::string readFile(const std::string& file_path) {
   return buffer.str();
 }
 
-std::vector<std::string> readLines(const std::string& file_path) {
+std::vector<std::string> readLines(const std::string &file_path) {
   std::ifstream file(file_path);
   if (!file.is_open()) {
     throw std::runtime_error("Error opening the file.");
@@ -30,7 +30,7 @@ std::vector<std::string> readLines(const std::string& file_path) {
   return lines;
 }
 
-std::vector<std::vector<char>> readCharMatrix(const std::string& file_path) {
+std::vector<std::vector<char>> readCharMatrix(const std::string &file_path) {
   std::ifstream file(file_path);
   if (!file.is_open()) {
     throw std::runtime_error("Error opening the file.");
@@ -46,34 +46,35 @@ std::vector<std::vector<char>> readCharMatrix(const std::string& file_path) {
   return mat;
 }
 
-std::vector<int> ints(const std::string& s) {
+std::vector<int> ints(const std::string &s) {
   std::vector<int> ret;
-  for (const std::string& word : split(s)) {
+  for (const std::string &word : split(s)) {
     if (!word.empty() &&
         (word[0] == '-' ||
-         std::all_of(word.begin(), word.end(), [](unsigned char c) { return isdigit(c); }))) {
+         std::all_of(word.begin(), word.end(),
+                     [](unsigned char c) { return isdigit(c); }))) {
       ret.push_back(stoi(word));
-    }
-    else {
+    } else {
       throw std::invalid_argument(word + " is invalid");
     }
   }
   return ret;
 }
 
-std::vector<int> ints(const std::string& s, char sep) {
+std::vector<int> ints(const std::string &s, char sep) {
   std::vector<int> ret;
-  for (const std::string& word : split(s, sep)) {
+  for (const std::string &word : split(s, sep)) {
     if (!word.empty() &&
         (word[0] == '-' ||
-         std::all_of(word.begin(), word.end(), [](unsigned char c) { return isdigit(c); }))) {
+         std::all_of(word.begin(), word.end(),
+                     [](unsigned char c) { return isdigit(c); }))) {
       ret.push_back(stoi(word));
     }
   }
   return ret;
 }
 
-std::vector<std::string> split(const std::string& s, char delim) {
+std::vector<std::string> split(const std::string &s, char delim) {
   std::vector<std::string> result;
   std::stringstream ss(s);
   std::string item;
@@ -84,7 +85,8 @@ std::vector<std::string> split(const std::string& s, char delim) {
   return result;
 }
 
-std::vector<std::string> split(const std::string& s, const std::string& delimiter) {
+std::vector<std::string> split(const std::string &s,
+                               const std::string &delimiter) {
   size_t pos_start = 0, pos_end, delim_len = delimiter.length();
   std::string token;
   std::vector<std::string> res;
@@ -99,25 +101,26 @@ std::vector<std::string> split(const std::string& s, const std::string& delimite
   return res;
 }
 
-std::vector<std::string> split(std::string const& input) {
+std::vector<std::string> split(std::string const &input) {
   std::istringstream buffer(input);
   std::vector<std::string> ret((std::istream_iterator<std::string>(buffer)),
                                std::istream_iterator<std::string>());
   return ret;
 }
 
-std::string join(const std::vector<std::string>& v, char c) {
+std::string join(const std::vector<std::string> &v, char c) {
   std::string s;
   for (auto p = v.begin(); p != v.end(); ++p) {
     s += *p;
-    if (p != v.end() - 1) s += c;
+    if (p != v.end() - 1)
+      s += c;
   }
   return s;
 }
 
-std::string join(const std::vector<std::string>& v) {
+std::string join(const std::vector<std::string> &v) {
   std::string s;
-  for (const auto& p : v) {
+  for (const auto &p : v) {
     s += p;
   }
   return s;

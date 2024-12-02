@@ -35,7 +35,8 @@ TEST(IntsTest, TrailingSep) {
 TEST(SplitTest, StrSep) {
   std::string comma_sep = "hi, there, friend";
 
-  EXPECT_THAT(split(comma_sep, ", "), testing::ElementsAre("hi", "there", "friend"));
+  EXPECT_THAT(split(comma_sep, ", "),
+              testing::ElementsAre("hi", "there", "friend"));
 }
 
 TEST(JoinTest, WithSep) {
