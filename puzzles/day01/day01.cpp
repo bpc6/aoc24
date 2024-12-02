@@ -32,11 +32,10 @@ int part2(const std::string &filename) {
   auto col0 = get_col(PARENT_DIR "/" + filename, 0);
   auto col1 = get_col(PARENT_DIR "/" + filename, 1);
 
-  long score = 0;
-
-  for (auto lval : col0) {
-    score += lval * std::ranges::count(col1, lval);
-  }
+  auto score = std::accumulate(
+      col0.begin(), col0.end(), 0, [&col1](long sum, auto lval) {
+        return sum + lval * std::ranges::count(col1, lval);
+      });
 
   return score;
 }
