@@ -1,8 +1,8 @@
 #include "day01.h"
 #include "parsing.h"
-#include <ranges>
-
 #include <algorithm>
+#include <numeric>
+#include <ranges>
 
 std::vector<int> get_col(const std::string &filepath, int colnum) {
   auto lines = readLines(filepath);
@@ -26,4 +26,17 @@ int part1(const std::string &filename) {
     total_dist += std::abs(a - b);
   }
   return total_dist;
+}
+
+int part2(const std::string &filename) {
+  auto col0 = get_col(PARENT_DIR "/" + filename, 0);
+  auto col1 = get_col(PARENT_DIR "/" + filename, 1);
+
+  long score = 0;
+
+  for (auto lval : col0) {
+    score += lval * std::ranges::count(col1, lval);
+  }
+
+  return score;
 }
