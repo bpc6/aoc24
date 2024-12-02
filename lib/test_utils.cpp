@@ -37,3 +37,13 @@ TEST(SplitTest, StrSep) {
 
   EXPECT_THAT(split(comma_sep, ", "), testing::ElementsAre("hi", "there", "friend"));
 }
+
+TEST(JoinTest, WithSep) {
+  std::vector<std::string> strings{"hi", "there", "bob"};
+  EXPECT_EQ(join(strings, ' '), "hi there bob");
+}
+
+TEST(JoinTest, NoSep) {
+  std::vector<std::string> strings{"1", "2", "3"};
+  EXPECT_EQ(join(strings), "123");
+}
