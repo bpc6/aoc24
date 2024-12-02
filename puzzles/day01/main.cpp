@@ -15,18 +15,17 @@ std::vector<int> get_col(const std::string &filepath, int colnum) {
 }
 
 int main() {
-  auto col0 = get_col(PARENT_DIR "/test.txt", 0);
-  auto col1 = get_col(PARENT_DIR "/test.txt", 1);
+  auto col0 = get_col(PARENT_DIR "/input.txt", 0);
+  auto col1 = get_col(PARENT_DIR "/input.txt", 1);
 
   std::sort(col0.begin(), col0.end());
   std::sort(col1.begin(), col1.end());
 
+  int total_dist = 0;
   for (auto [a, b] : std::ranges::views::zip(col0, col1)) {
+    total_dist += std::abs(a - b);
   }
 
-  for (const auto &val : col0) {
-    std::cout << val << " ";
-  }
-  std::cout << std::endl;
+  std::cout << total_dist << std::endl;
   return EXIT_SUCCESS;
 }
