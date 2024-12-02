@@ -18,7 +18,7 @@ std::string readFile(const std::string &file_path) {
 std::vector<std::string> readLines(const std::string &file_path) {
   std::ifstream file(file_path);
   if (!file.is_open()) {
-    throw std::runtime_error("Error opening the file.");
+    throw std::runtime_error("Error opening the file" + file_path);
   }
 
   std::vector<std::string> lines;
