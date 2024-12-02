@@ -55,6 +55,9 @@ std::vector<int> ints(const std::string& s) {
          std::all_of(word.begin(), word.end(), [](unsigned char c) { return isdigit(c); }))) {
       ret.push_back(stoi(word));
     }
+    else {
+      throw std::invalid_argument(word + " is invalid");
+    }
   }
   return ret;
 }
