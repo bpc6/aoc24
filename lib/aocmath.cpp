@@ -1,8 +1,8 @@
 #include "aocmath.h"
+#include <numeric>
 
 uint64_t gcd(uint64_t a, uint64_t b) {
-  if (a == 0) return b;
-  return gcd(b % a, a);
+  return std::gcd(a, b);
 }
 
-uint64_t lcd(uint64_t a, uint64_t b) { return (a * b) / gcd(a, b); }
+uint64_t lcd(uint64_t a, uint64_t b) { return std::lcm(a, b); }
