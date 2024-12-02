@@ -1,5 +1,6 @@
 #include "parsing.h"
 
+#include <algorithm>
 #include <fstream>
 #include <iterator>
 #include <sstream>

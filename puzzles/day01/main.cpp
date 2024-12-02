@@ -1,4 +1,5 @@
 #include "parsing.h"
+#include <algorithm>
 #include <iostream>
 #include <ranges>
 #include <vector>
@@ -19,6 +20,9 @@ int main() {
 
   std::sort(col0.begin(), col0.end());
   std::sort(col1.begin(), col1.end());
+
+  for (auto [a, b] : std::ranges::views::zip(col0, col1)) {
+  }
 
   for (const auto &val : col0) {
     std::cout << val << " ";
