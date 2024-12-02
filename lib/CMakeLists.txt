@@ -1,10 +1,10 @@
-add_library(aoc_lib math.cpp parsing.cpp)
+add_library(aoc_lib aocmath.cpp parsing.cpp)
 target_include_directories(aoc_lib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 
 add_executable(
         utils_test
-        test_math.cpp
-        test_parsing.cpp
+        aocmath_test.cpp
+        parsing_test.cpp
 )
 target_link_libraries(
         utils_test

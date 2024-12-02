@@ -1,4 +1,4 @@
-#include "math.h"
+#include "aocmath.h"
 #include <gtest/gtest.h>
 
 TEST(LCDTest, Basic) {
