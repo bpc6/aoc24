@@ -1,6 +1,7 @@
 # Project stuff
 .idea
 *build*/
+**/input.txt
 
 # Prerequisites
 *.d
