@@ -32,6 +32,12 @@ TEST(IntsTest, TrailingSep) {
   EXPECT_THAT(ints(ints_str, ','), testing::ElementsAre(23, 45, -12));
 }
 
+TEST(IntsTest, HyphenNumeric) {
+  std::string ints_str = "-hello";
+
+  EXPECT_THROW(ints(ints_str), std::invalid_argument);
+}
+
 TEST(SplitTest, StrSep) {
   std::string comma_sep = "hi, there, friend";
 
