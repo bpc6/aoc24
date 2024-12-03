@@ -47,13 +47,13 @@ std::vector<std::vector<char>> readCharMatrix(const std::string &file_path) {
   return mat;
 }
 
-std::vector<int> ints(const std::string &s) {
+std::vector<int> ints(const std::vector<std::string> &strings) {
   std::vector<int> ret;
-  for (const std::string &word : split(s)) {
+  for (const std::string &word : strings) {
     if (!word.empty() &&
-        (word[0] == '-' ||
-         std::all_of(word.begin(), word.end(),
-                     [](unsigned char c) { return isdigit(c); }))) {
+        (word[0] == '-' || std::ranges::all_of(word, [](unsigned char c) {
+           return isdigit(c);
+         }))) {
       ret.push_back(stoi(word));
     } else {
       throw std::invalid_argument(word + " is invalid");
@@ -62,17 +62,10 @@ std::vector<int> ints(const std::string &s) {
   return ret;
 }
 
+std::vector<int> ints(const std::string &s) { return ints(split(s)); }
+
 std::vector<int> ints(const std::string &s, char sep) {
-  std::vector<int> ret;
-  for (const std::string &word : split(s, sep)) {
-    if (!word.empty() &&
-        (word[0] == '-' ||
-         std::all_of(word.begin(), word.end(),
-                     [](unsigned char c) { return isdigit(c); }))) {
-      ret.push_back(stoi(word));
-    }
-  }
-  return ret;
+  return ints(split(s, sep));
 }
 
 std::vector<std::string> split(const std::string &s, char delim) {
