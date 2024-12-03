@@ -10,5 +10,5 @@ TEST(IsSafeTest, Basic) {
   EXPECT_TRUE(is_safe(std::vector{1, 3, 6, 7, 9}));
 }
 
-TEST(Day02Test, Part1) { EXPECT_EQ(part1("test.txt"), 0); }
+TEST(Day02Test, Part1) { EXPECT_EQ(part1("test.txt"), 2); }
 TEST(Day02Test, Part2) { EXPECT_EQ(part2("test.txt"), 0); }
