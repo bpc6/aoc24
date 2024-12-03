@@ -4,6 +4,8 @@
 #include <string>
 #include <vector>
 
+bool is_safe(const std::vector<int> &level);
+
 int part1(const std::string &filename);
 int part2(const std::string &filename);
 
