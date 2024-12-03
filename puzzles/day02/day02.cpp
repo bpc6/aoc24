@@ -15,8 +15,8 @@ bool small_steps(const std::vector<int> &level) {
 }
 
 bool asc_or_desc(const std::vector<int> &level) {
-  std::vector<int> level_reverse(level.size(), 0);
-  std::ranges::reverse_copy(level, level_reverse.begin());
+  std::vector<int> level_reverse{};
+  std::ranges::reverse_copy(level, std::back_inserter(level_reverse));
   return std::ranges::is_sorted(level) || std::ranges::is_sorted(level_reverse);
 }
 
