@@ -1,0 +1,25 @@
+{
+  name: "aoc24",
+  context: "..",
+  dockerFile: "Dockerfile",
+  customizations: {
+  },
+  build: {
+    args: {
+      USER_DOCKER: "${localEnv:USER}",
+    },
+    options: [
+      "--no-cache"
+    ]
+  },
+  overrideCommand: true,
+  mounts: [
+    "source=${localEnv:HOME},target=${localEnv:HOME},type=bind",
+  ],
+  workspaceMount: "source=${localWorkspaceFolder},target=${localWorkspaceFolder},type=bind",
+  workspaceFolder: "${localWorkspaceFolder}",
+  runArgs: [
+    "--privileged",
+    "-e HOME=${localEnv:HOME}"
+  ]
+}
