@@ -14,7 +14,7 @@ std::vector<int> get_col(const std::string &filepath, int colnum) {
   return result;
 }
 
-int part1(const std::string &filename) {
+long part1(const std::string &filename) {
   auto col0 = get_col(PARENT_DIR "/" + filename, 0);
   auto col1 = get_col(PARENT_DIR "/" + filename, 1);
 
@@ -28,7 +28,7 @@ int part1(const std::string &filename) {
   return total_dist;
 }
 
-int part2(const std::string &filename) {
+long part2(const std::string &filename) {
   auto col0 = get_col(PARENT_DIR "/" + filename, 0);
   auto col1 = get_col(PARENT_DIR "/" + filename, 1);
 

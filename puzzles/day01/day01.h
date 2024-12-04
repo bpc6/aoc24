@@ -5,7 +5,7 @@
 #include <vector>
 
 std::vector<int> get_col(const std::string &filepath, int colnum);
-int part1(const std::string &filename);
-int part2(const std::string &filename);
+long part1(const std::string &filename);
+long part2(const std::string &filename);
 
 #endif // AOC24_DAY01_H
