@@ -10,7 +10,8 @@ long part1(const std::string &filename) {
   int tot = 0;
   for (std::sregex_iterator it(txt.begin(), txt.end(), mul), end; it != end;
        ++it) {
-    tot += stoi((*it)[1]) * stoi((*it)[2]);
+    const auto &match = *it;
+    tot += stoi(match[1]) * stoi(match[2]);
   }
 
   return tot;
