@@ -4,8 +4,6 @@
 #include <numeric>
 #include <ranges>
 
-#include <iostream>
-
 bool small_step(int a, int b) {
   return (std::abs(a - b) >= 1) && (std::abs(a - b) <= 3);
 }
@@ -17,8 +15,8 @@ template <std::ranges::range R> bool small_steps(const R &level) {
 }
 
 template <std::ranges::range R> bool asc_or_desc(const R &level) {
-  std::vector<int> level_reverse{};
-  std::ranges::reverse_copy(level, std::back_inserter(level_reverse));
+  std::vector<int> level_reverse(level.size());
+  std::ranges::reverse_copy(level, level_reverse.begin());
   return std::ranges::is_sorted(level) || std::ranges::is_sorted(level_reverse);
 }
 
