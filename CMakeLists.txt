@@ -21,3 +21,4 @@ enable_testing()
 # Add subdirectories for each puzzle
 add_subdirectory(lib)
 add_subdirectory(puzzles/day01)
+add_subdirectory(puzzles/day02)
