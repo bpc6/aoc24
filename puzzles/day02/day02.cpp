@@ -44,12 +44,9 @@ std::vector<int> drop_ith(const std::vector<int> &v, std::size_t i) {
 }
 
 bool is_safe_after_removal(const std::vector<int> &level) {
-  for (auto idx = 0; idx < level.size(); ++idx) {
-    if (is_safe(drop_ith(level, idx))) {
-      return true;
-    }
-  }
-  return false;
+  return std::ranges::any_of(
+      std::views::iota(0u, level.size()),
+      [&level](int idx) { return is_safe(drop_ith(level, idx)); });
 }
 
 long part2(const std::string &filename) {
