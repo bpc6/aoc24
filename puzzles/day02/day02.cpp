@@ -4,8 +4,6 @@
 #include <numeric>
 #include <ranges>
 
-#include <iostream>
-
 bool small_step(int a, int b) {
   return (std::abs(a - b) >= 1) && (std::abs(a - b) <= 3);
 }
