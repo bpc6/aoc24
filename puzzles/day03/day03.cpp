@@ -1,5 +1,6 @@
 #include "day03.h"
 #include "parsing.h"
+#include <algorithm>
 #include <regex>
 
 long part1(const std::string &filename) {
@@ -17,18 +18,41 @@ long part1(const std::string &filename) {
   return tot;
 }
 
-std::vector<long> find_regex_inds(const std::string &s, const std::regex &re) {
-  std::vector<long> result;
+std::vector<size_t> find_regex_inds(const std::string &s,
+                                    const std::regex &re) {
+  std::vector<std::size_t> result;
   for (std::sregex_iterator it(s.begin(), s.end(), re), end; it != end; ++it) {
     result.push_back(it->position());
   }
   return result;
 }
 
-bool do_active(const std::string &s, long idx) {
-  auto do_inds = find_regex_inds(s, std::regex(R"(do\(\))"));
-  auto dont_inds = find_regex_inds(s, std::regex(R"(don't())"));
+std::optional<int> leftmost_index(const std::vector<size_t> &inds,
+                                  long left_of) {
+  std::vector<size_t> inds_desc(inds.size());
+  std::ranges::copy(inds, inds_desc.begin());
+  std::ranges::sort(inds_desc, std::greater<>());
 
+  for (auto idx : inds_desc) {
+    if (idx < left_of) {
+      return idx;
+    }
+  }
+  return {};
+}
+
+bool do_active(const std::string &s, long idx) {
+  auto left_do =
+      leftmost_index(find_regex_inds(s, std::regex(R"(do\(\))")), idx);
+  auto left_dont =
+      leftmost_index(find_regex_inds(s, std::regex(R"(don't\(\))")), idx);
+
+  if (left_dont) {
+    if (left_do) {
+      return left_do > left_dont;
+    }
+    return false;
+  }
   return true;
 }
 
