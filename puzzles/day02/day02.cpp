@@ -24,14 +24,10 @@ bool is_safe(const std::vector<int> &level) {
   return small_steps(level) and asc_or_desc(level);
 }
 
-int part1(const std::string &filename) {
-  int count = 0;
-  for (const auto &line : readLines(PARENT_DIR "/" + filename)) {
-    if (is_safe(ints(line))) {
-      count++;
-    }
-  }
-  return count;
+long part1(const std::string &filename) {
+  return std::ranges::count_if(
+      readLines(PARENT_DIR "/" + filename),
+      [](const std::string &line) { return is_safe(ints(line)); });
 }
 
-int part2(const std::string &filename) { return 0; }
+long part2(const std::string &filename) { return 0; }
