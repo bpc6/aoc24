@@ -3,16 +3,16 @@
 #include <gmock/gmock.h>
 
 TEST(FindInGrid, Basic) {
-    auto finder = find_in_grid({{'a', 'b', 'c'}, {'d', 'e', 'a'}});
+    auto finder = find_in_grid({{'a', 'b', 'c'}, {'d', 'e', 'a'}}, 'a');
     std::pair<size_t, size_t> pos;
 
-    EXPECT_TRUE(finder(pos, 'a'));
+    EXPECT_TRUE(finder(pos));
     EXPECT_THAT(pos, testing::Pair(0, 0));
 
-    EXPECT_TRUE(finder(pos, 'a'));
+    EXPECT_TRUE(finder(pos));
     EXPECT_THAT(pos, testing::Pair(1, 2));
 
-    EXPECT_FALSE(finder(pos, 'a'));
+    EXPECT_FALSE(finder(pos));
 }
 
 TEST(Day04Test, Part1) { EXPECT_EQ(part1("test.txt"), 18); }

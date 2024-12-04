@@ -5,7 +5,7 @@
 #include <ranges>
 
 
-bool find_in_grid::operator()(std::pair<size_t, size_t> &dest, char c) {
+bool find_in_grid::operator()(std::pair<size_t, size_t> &dest) {
     while (curr.first < grid.size()) {
         while (curr.second < grid[curr.first].size()) {
             if (grid[curr.first][curr.second] == c) {
@@ -25,14 +25,14 @@ bool find_in_grid::operator()(std::pair<size_t, size_t> &dest, char c) {
 int count_xmas(const char_mat &grid) {
     std::pair<size_t, size_t> x_pos;
 
-    while (find_in_grid(grid)(x_pos, 'X')) {
-        if (find_m(grid, x_pos, m_pos)) {
-            direction = m_pos - x_pos;
-            if (find_as(grid, m_pos, direction)) {
-                count++;
-            }
-        }
-    }
+//    while (find_in_grid(grid)(x_pos, 'X')) {
+//        if (find_m(grid, x_pos, m_pos)) {
+//            direction = m_pos - x_pos;
+//            if (find_as(grid, m_pos, direction)) {
+//                count++;
+//            }
+//        }
+//    }
 
     return 0;
 }

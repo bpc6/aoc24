@@ -10,9 +10,10 @@ using char_mat = std::vector<std::vector<char>>;
 class find_in_grid {
     std::pair<size_t, size_t> curr;
     const char_mat grid;
+    const char c;
 public:
-    explicit find_in_grid(char_mat grid) : grid(std::move(grid)), curr(0, 0) {};
-    bool operator()(std::pair<size_t, size_t> &dest, char c);
+    explicit find_in_grid(char_mat grid, char c) : curr(0, 0), grid(std::move(grid)), c(c) {};
+    bool operator()(std::pair<size_t, size_t> &dest);
 };
 
 long part1(const std::string &filename);
