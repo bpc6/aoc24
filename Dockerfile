@@ -11,7 +11,8 @@ RUN apt-get update && apt-get install -y \
     lsb-release \
     ca-certificates \
     cmake \
-    make
+    make \
+    git
 
 
 # Set GCC 13 as the default compiler
