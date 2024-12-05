@@ -11,6 +11,13 @@ std::vector<std::pair<int, int>> read_rules(const std::vector<std::string> &line
     return {pairs.begin(), pairs.end()};
 }
 
+std::vector<std::vector<int>> read_page_updates(const std::vector<std::string> &lines) {
+    auto has_comma = [](const std::string &s) {return s.find(',') != std::string::npos;};
+    auto to_ints = [](const std::string &s) {return ints(s, ',');};
+    auto int_vecs = lines | std::views::filter(has_comma) | std::views::transform(to_ints);
+    return {int_vecs.begin(), int_vecs.end()};
+}
+
 long part1(const std::string &filename) {
   return 0;
 }

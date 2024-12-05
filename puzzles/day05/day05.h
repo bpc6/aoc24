@@ -5,6 +5,8 @@
 #include <vector>
 
 std::vector<std::pair<int, int>> read_rules(const std::vector<std::string> &lines);
+std::vector<std::vector<int>> read_page_updates(const std::vector<std::string> &lines);
+
 
 long part1(const std::string &filename);
 long part2(const std::string &filename);
