@@ -7,17 +7,7 @@
 #include <vector>
 
 using char_mat = std::vector<std::vector<char>>;
-
-class find_in_grid {
-  std::pair<size_t, size_t> curr;
-  const char_mat grid;
-  const char c;
-
-public:
-  explicit find_in_grid(char_mat grid, char c)
-      : curr(0, 0), grid(std::move(grid)), c(c){};
-  std::optional<std::pair<size_t, size_t>> operator()();
-};
+std::vector<std::pair<int, int>> find_coords(const char_mat &grid, char c);
 
 long part1(const std::string &filename);
 long part2(const std::string &filename);
