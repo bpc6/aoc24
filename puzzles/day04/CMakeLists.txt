@@ -1,6 +1,6 @@
 add_executable(day04 main.cpp day04.cpp)
 target_include_directories(day04 PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
-target_link_libraries(day04 PRIVATE aoc_lib)
+target_link_libraries(day04 PRIVATE aoc_lib Eigen3::Eigen)
 
 target_compile_definitions(day04 PUBLIC PARENT_DIR=\"${CMAKE_CURRENT_SOURCE_DIR}\")
 
@@ -11,6 +11,7 @@ add_executable(
 )
 target_link_libraries(
         day04_test
+        Eigen3::Eigen
         aoc_lib
         GTest::gtest_main
         GTest::gmock_main

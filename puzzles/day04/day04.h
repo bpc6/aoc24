@@ -1,13 +1,14 @@
 #ifndef AOC24_DAY01_H
 #define AOC24_DAY01_H
 
+#include <Eigen/Dense>
 #include <optional>
 #include <string>
 #include <utility>
 #include <vector>
 
 using char_mat = std::vector<std::vector<char>>;
-std::vector<std::pair<int, int>> find_coords(const char_mat &grid, char c);
+std::vector<Eigen::Vector2i> find_coords(const char_mat &grid, char c);
 std::vector<std::pair<int, int>> find_near(const char_mat &grid, char c,
                                            std::pair<int, int> target);
 
