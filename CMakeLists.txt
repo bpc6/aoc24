@@ -24,6 +24,7 @@ FetchContent_Declare(
         GIT_REPOSITORY https://gitlab.com/libeigen/eigen.git
         GIT_TAG        3.4.0
 )
+set(BUILD_TESTING OFF)
 set(EIGEN_BUILD_TESTING OFF)
 set(EIGEN_MPL2_ONLY ON)
 set(EIGEN_BUILD_PKGCONFIG OFF)
