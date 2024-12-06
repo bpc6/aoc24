@@ -30,19 +30,27 @@ std::vector<Eigen::Vector2i> find_near(const char_mat &grid, char c,
   return result;
 }
 
-// bool rel_pos_is(const char_mat &grid, )
+bool on_grid(const char_mat &grid, const Eigen::Vector2i &coord) {
+  return coord.y() >= 0 && coord.y() < grid.size() && coord.x() >= 0 &&
+         coord.x() < grid[coord.y()].size();
+}
+
+bool grid_pos_is(const char_mat &grid, const Eigen::Vector2i &coord, char c) {
+  return on_grid(grid, coord) && grid[coord.y()][coord.x()] == c;
+}
 
 int count_xmas(const char_mat &grid) {
   int count = 0;
   for (auto x_pos : find_coords(grid, 'X')) {
     for (auto m_pos : find_near(grid, 'M', x_pos)) {
       auto direction = m_pos - x_pos;
-      //                if (find_as(grid, m_pos, direction)) {
-      //                  count++;
-      //                }
+      auto a_pos = m_pos + direction;
+      auto s_pos = a_pos + direction;
+      if (grid_pos_is(grid, a_pos, 'A') && grid_pos_is(grid, s_pos, 'S')) {
+        count++;
+      }
     }
   }
-
   return count;
 }
 
