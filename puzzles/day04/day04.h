@@ -9,8 +9,8 @@
 
 using char_mat = std::vector<std::vector<char>>;
 std::vector<Eigen::Vector2i> find_coords(const char_mat &grid, char c);
-std::vector<std::pair<int, int>> find_near(const char_mat &grid, char c,
-                                           std::pair<int, int> target);
+std::vector<Eigen::Vector2i> find_near(const char_mat &grid, char c,
+                                       Eigen::Vector2i target);
 
 long part1(const std::string &filename);
 long part2(const std::string &filename);
