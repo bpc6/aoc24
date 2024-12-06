@@ -35,8 +35,20 @@ read_page_updates(const std::vector<std::string> &lines) {
   return {int_vecs.begin(), int_vecs.end()};
 }
 
-bool correct_order(const std::vector<int> update,
-                   std::map<int, std::vector<int>> rules) {
+bool correct_order(const std::vector<int> &update,
+                   std::map<int, std::vector<int>> &rules) {
+  for (auto [idx, left] : update | std::views::enumerate) {
+    for (auto right : update | std::views::drop(idx + 1)) {
+      if (std::ranges::find(rules[left], right) == rules[left].end()) {
+        return false;
+      }
+    }
+  }
+  return true;
+}
+
+bool fix_order(const std::vector<int> &update,
+               std::map<int, std::vector<int>> &rules) {
   for (auto [idx, left] : update | std::views::enumerate) {
     for (auto right : update | std::views::drop(idx + 1)) {
       if (std::ranges::find(rules[left], right) == rules[left].end()) {
@@ -48,7 +60,7 @@ bool correct_order(const std::vector<int> update,
 }
 
 int middle(const std::vector<int> &v) {
-  if (v.size() == 0) {
+  if (v.empty()) {
     return 0;
   }
   return v[static_cast<int>(v.size() / 2)];
@@ -59,12 +71,12 @@ long part1(const std::string &filename) {
   auto rules = read_map(lines);
   auto updates = read_page_updates(lines);
 
-  auto correct_middles = updates |
-                         std::views::filter([&rules](std::vector<int> v) {
-                           return correct_order(v, rules);
-                         }) |
-                         std::views::transform(middle);
-  return std::ranges::fold_left(correct_middles, 0, std::plus<int>());
+  auto correct_middles =
+      updates | std::views::filter([&rules](const std::vector<int> &v) {
+        return correct_order(v, rules);
+      }) |
+      std::views::transform(middle);
+  return std::ranges::fold_left(correct_middles, 0, std::plus<>());
 }
 
 long part2(const std::string &filename) { return 0; }
