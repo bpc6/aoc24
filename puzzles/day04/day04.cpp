@@ -54,8 +54,33 @@ int count_xmas(const char_mat &grid) {
   return count;
 }
 
+int count_x_mas(const char_mat &grid) {
+  int count = 0;
+  for (auto a_pos : find_coords(grid, 'A')) {
+    int mas_count = 0;
+    for (auto m_pos : find_near(grid, 'M', a_pos)) {
+      auto direction = m_pos - a_pos;
+      if (direction.cwiseAbs().sum() != 2) {
+        // not a corner
+        continue;
+      }
+      auto s_pos = a_pos - direction;
+      if (grid_pos_is(grid, s_pos, 'S')) {
+        ++mas_count;
+      }
+
+      if (mas_count == 2) {
+        count++;
+      }
+    }
+  }
+  return count;
+}
+
 long part1(const std::string &filename) {
   return count_xmas(readCharMatrix(PARENT_DIR "/" + filename));
 }
 
-long part2(const std::string &filename) { return 0; }
+long part2(const std::string &filename) {
+  return count_x_mas(readCharMatrix(PARENT_DIR "/" + filename));
+}
