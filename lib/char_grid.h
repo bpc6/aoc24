@@ -6,7 +6,7 @@ using char_mat = std::vector<std::vector<char>>;
 
 class CharGrid {
 private:
-  char_mat grid;
+  char_mat grid_;
 
 public:
   explicit CharGrid(const char_mat &&char_grid);
