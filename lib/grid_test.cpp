@@ -8,6 +8,18 @@ protected:
   Grid<char> grid_{{{'a', 'b', 'c'}, {'d', 'e', 'a'}}};
 };
 
+TEST_F(GridTest, HeightWidthConstrutor) {
+  Grid<int> grid(4, 5, 9);
+  EXPECT_EQ(grid.height(), 4);
+  EXPECT_EQ(grid.width(), 5);
+  for (int y = 0; y < grid.height(); ++y) {
+    for (int x = 0; x < grid.width(); ++x) {
+      auto val = grid[{x, y}];
+      EXPECT_EQ(val, 9);
+    }
+  }
+}
+
 TEST_F(GridTest, BracketAccess) {
   auto c = grid_[{1, 1}];
   EXPECT_EQ(c, 'e');

@@ -6,10 +6,15 @@
 template <typename T> class Grid {
 protected:
   using vec2d = std::vector<std::vector<T>>;
-  vec2d grid_;
+  vec2d grid_{};
 
 public:
   explicit Grid(const vec2d &&grid) : grid_(std::move(grid)) {}
+  explicit Grid(size_t height, size_t width, T initial) {
+    for (size_t i = 0; i < height; ++i) {
+      grid_.push_back(std::vector<T>(width, initial));
+    }
+  }
 
   T &operator[](Eigen::Vector2i coord) { return grid_[coord.y()][coord.x()]; }
 
