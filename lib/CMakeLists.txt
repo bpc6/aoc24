@@ -1,10 +1,17 @@
-add_library(aoc_lib aocmath.cpp parsing.cpp)
+add_library(
+        aoc_lib
+        aocmath.cpp
+        parsing.cpp
+        char_grid.cpp
+)
 target_include_directories(aoc_lib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+target_link_libraries(aoc_lib PUBLIC Eigen3::Eigen)
 
 add_executable(
         utils_test
         aocmath_test.cpp
         parsing_test.cpp
+        char_grid_test.cpp
 )
 target_link_libraries(
         utils_test
