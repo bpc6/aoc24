@@ -7,6 +7,29 @@ protected:
   CharGrid grid_{{{'a', 'b', 'c'}, {'d', 'e', 'a'}}};
 };
 
+TEST_F(GridTest, BracketAccess) {
+  auto c = grid_[{1, 1}];
+  EXPECT_EQ(c, 'e');
+  c = 'z';
+  auto new_c = grid_[{1, 1}];
+  EXPECT_EQ(c, 'z');
+  EXPECT_EQ(new_c, 'e');
+}
+
+TEST_F(GridTest, BracketModify) {
+  auto c = grid_[{1, 1}];
+  EXPECT_EQ(c, 'e');
+  grid_[{1, 1}] = 'z';
+  auto new_c = grid_[{1, 1}];
+  EXPECT_EQ(c, 'e');
+  EXPECT_EQ(new_c, 'z');
+}
+
+TEST_F(GridTest, HasCoord) {
+  EXPECT_TRUE(grid_.has_coord({2, 1}));
+  EXPECT_FALSE(grid_.has_coord({1, 2}));
+}
+
 TEST_F(GridTest, FindCoords) {
   auto a_coords = grid_.find_coords('a');
 
