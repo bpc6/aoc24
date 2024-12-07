@@ -50,3 +50,8 @@ TEST_F(GridTest, AsNearD) {
   EXPECT_EQ(a_coords.size(), 1);
   EXPECT_THAT(a_coords[0], Eigen::Vector2i(0, 0));
 }
+
+TEST_F(GridTest, HeightAndWidth) {
+  EXPECT_EQ(grid_.height(), 2);
+  EXPECT_EQ(grid_.width(), 3);
+}
