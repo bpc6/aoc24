@@ -5,7 +5,7 @@
 
 class GridTest : public testing::Test {
 protected:
-  CharGrid grid_{{{'a', 'b', 'c'}, {'d', 'e', 'a'}}};
+  Grid grid_{{{'a', 'b', 'c'}, {'d', 'e', 'a'}}};
 };
 
 TEST_F(GridTest, BracketAccess) {

@@ -2,14 +2,13 @@
 #include <string>
 #include <vector>
 
-using char_mat = std::vector<std::vector<char>>;
-
-class CharGrid {
+class Grid {
 protected:
-  char_mat grid_;
+  using vec2d = std::vector<std::vector<char>>;
+  vec2d grid_;
 
 public:
-  explicit CharGrid(const char_mat &&char_grid);
+  explicit Grid(const vec2d &&char_grid);
   char &operator[](Eigen::Vector2i coord);
   const char &operator[](Eigen::Vector2i coord) const;
   size_t height() const;

@@ -2,7 +2,7 @@
 #include "char_grid.h"
 #include "parsing.h"
 
-int count_xmas(const CharGrid &grid) {
+int count_xmas(const Grid &grid) {
   int count = 0;
   for (auto x_pos : grid.find_coords('X')) {
     for (auto m_pos : grid.find_near('M', x_pos)) {
@@ -18,7 +18,7 @@ int count_xmas(const CharGrid &grid) {
   return count;
 }
 
-int count_x_mas(const CharGrid &grid) {
+int count_x_mas(const Grid &grid) {
   int count = 0;
   for (auto a_pos : grid.find_coords('A')) {
     int mas_count = 0;
@@ -42,9 +42,9 @@ int count_x_mas(const CharGrid &grid) {
 }
 
 long part1(const std::string &filename) {
-  return count_xmas(CharGrid(readCharMatrix(PARENT_DIR "/" + filename)));
+  return count_xmas(Grid(readCharMatrix(PARENT_DIR "/" + filename)));
 }
 
 long part2(const std::string &filename) {
-  return count_x_mas(CharGrid(readCharMatrix(PARENT_DIR "/" + filename)));
+  return count_x_mas(Grid(readCharMatrix(PARENT_DIR "/" + filename)));
 }
