@@ -22,15 +22,15 @@ public:
   size_t size() const { return this->height() * this->width(); }
 
   [[nodiscard]] bool has_coord(const Eigen::Vector2i &coord) const {
-    return coord.y() >= 0 && coord.y() < grid_.size() && coord.x() >= 0 &&
-           coord.x() < grid_[coord.y()].size();
+    return coord.y() >= 0 && coord.y() < this->height() && coord.x() >= 0 &&
+           coord.x() < this->width();
   }
 
-  [[nodiscard]] std::vector<Eigen::Vector2i> find_coords(T c) const {
+  [[nodiscard]] std::vector<Eigen::Vector2i> find_coords(T match) const {
     std::vector<Eigen::Vector2i> result;
     for (auto const [y, row] : std::views::enumerate(grid_)) {
       for (auto const [x, val] : std::views::enumerate(row)) {
-        if (val == c) {
+        if (val == match) {
           result.push_back({x, y});
         }
       }
