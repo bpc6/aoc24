@@ -8,9 +8,21 @@
 #include <vector>
 
 using char_mat = std::vector<std::vector<char>>;
-std::vector<Eigen::Vector2i> find_coords(const char_mat &grid, char c);
-std::vector<Eigen::Vector2i> find_near(const char_mat &grid, char c,
-                                       Eigen::Vector2i target);
+
+class CharGrid {
+private:
+  char_mat grid;
+
+public:
+  CharGrid(const char_mat &&char_grid);
+  char &operator[](Eigen::Vector2i coord);
+  const char &operator[](Eigen::Vector2i coord) const;
+  bool has_coord(const Eigen::Vector2i &coord) const;
+
+  std::vector<Eigen::Vector2i> find_coords(char c) const;
+  std::vector<Eigen::Vector2i> find_near(char c,
+                                         const Eigen::Vector2i &target) const;
+};
 
 long part1(const std::string &filename);
 long part2(const std::string &filename);
