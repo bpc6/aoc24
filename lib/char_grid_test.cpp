@@ -55,3 +55,10 @@ TEST_F(GridTest, HeightAndWidth) {
   EXPECT_EQ(grid_.height(), 2);
   EXPECT_EQ(grid_.width(), 3);
 }
+
+TEST_F(GridTest, RangeFor) {
+  std::vector<char> options = {'a', 'b', 'c', 'd', 'e', 'a'};
+  for (auto c : grid_) {
+    EXPECT_TRUE(std::ranges::find(options, c) != options.end());
+  }
+}

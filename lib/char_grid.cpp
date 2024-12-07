@@ -2,14 +2,19 @@
 #include <ranges>
 
 CharGrid::CharGrid(const char_mat &&char_grid) : grid_(std::move(char_grid)) {}
+
 char &CharGrid::operator[](Eigen::Vector2i coord) {
   return grid_[coord.y()][coord.x()];
 }
+
 const char &CharGrid::operator[](Eigen::Vector2i coord) const {
   return grid_[coord.y()][coord.x()];
 }
+
 size_t CharGrid::height() const { return grid_.size(); }
+
 size_t CharGrid::width() const { return grid_[0].size(); }
+
 std::vector<Eigen::Vector2i> CharGrid::find_coords(char c) const {
   std::vector<Eigen::Vector2i> result;
   for (auto const [y, row] : std::views::enumerate(grid_)) {
@@ -21,6 +26,7 @@ std::vector<Eigen::Vector2i> CharGrid::find_coords(char c) const {
   }
   return result;
 }
+
 std::vector<Eigen::Vector2i>
 CharGrid::find_near(char c, const Eigen::Vector2i &target) const {
   std::vector<Eigen::Vector2i> result;
@@ -35,7 +41,36 @@ CharGrid::find_near(char c, const Eigen::Vector2i &target) const {
   }
   return result;
 }
+
 bool CharGrid::has_coord(const Eigen::Vector2i &coord) const {
   return coord.y() >= 0 && coord.y() < grid_.size() && coord.x() >= 0 &&
          coord.x() < grid_[coord.y()].size();
+}
+
+CharGrid::Iterator::Iterator(std::vector<std::vector<char>>::iterator r_it,
+                             std::vector<std::vector<char>>::iterator r_end,
+                             std::vector<char>::iterator c_it)
+    : row_it(r_it), row_end(r_end), col_it(c_it) {
+  advance_to_next_valid_row(); // Ensure valid position
+}
+
+void CharGrid::Iterator::advance_to_next_valid_row() {
+  while (row_it != row_end && col_it == row_it->end()) {
+    ++row_it;
+    if (row_it != row_end)
+      col_it = row_it->begin();
+  }
+}
+
+char &CharGrid::Iterator::operator*() const { return *col_it; }
+
+CharGrid::Iterator &CharGrid::Iterator::operator++() { // Pre-increment
+  ++col_it;
+  advance_to_next_valid_row();
+  return *this;
+}
+
+bool CharGrid::Iterator::operator!=(const CharGrid::Iterator &other) const {
+  return row_it != other.row_it ||
+         (row_it != row_end && col_it != other.col_it);
 }
