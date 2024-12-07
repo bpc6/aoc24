@@ -2,7 +2,7 @@
 #include "grid.h"
 #include "parsing.h"
 
-int count_xmas(const Grid &grid) {
+int count_xmas(const Grid<char> &grid) {
   int count = 0;
   for (auto x_pos : grid.find_coords('X')) {
     for (auto m_pos : grid.find_near('M', x_pos)) {
@@ -18,7 +18,7 @@ int count_xmas(const Grid &grid) {
   return count;
 }
 
-int count_x_mas(const Grid &grid) {
+int count_x_mas(const Grid<char> &grid) {
   int count = 0;
   for (auto a_pos : grid.find_coords('A')) {
     int mas_count = 0;

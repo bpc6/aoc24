@@ -5,7 +5,7 @@
 
 class GridTest : public testing::Test {
 protected:
-  Grid grid_{{{'a', 'b', 'c'}, {'d', 'e', 'a'}}};
+  Grid<char> grid_{{{'a', 'b', 'c'}, {'d', 'e', 'a'}}};
 };
 
 TEST_F(GridTest, BracketAccess) {
