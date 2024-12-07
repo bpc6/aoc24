@@ -15,6 +15,8 @@ size_t CharGrid::height() const { return grid_.size(); }
 
 size_t CharGrid::width() const { return grid_[0].size(); }
 
+size_t CharGrid::size() const { return this->height() * this->width(); }
+
 std::vector<Eigen::Vector2i> CharGrid::find_coords(char c) const {
   std::vector<Eigen::Vector2i> result;
   for (auto const [y, row] : std::views::enumerate(grid_)) {
@@ -45,32 +47,4 @@ CharGrid::find_near(char c, const Eigen::Vector2i &target) const {
 bool CharGrid::has_coord(const Eigen::Vector2i &coord) const {
   return coord.y() >= 0 && coord.y() < grid_.size() && coord.x() >= 0 &&
          coord.x() < grid_[coord.y()].size();
-}
-
-CharGrid::Iterator::Iterator(std::vector<std::vector<char>>::iterator r_it,
-                             std::vector<std::vector<char>>::iterator r_end,
-                             std::vector<char>::iterator c_it)
-    : row_it(r_it), row_end(r_end), col_it(c_it) {
-  advance_to_next_valid_row(); // Ensure valid position
-}
-
-void CharGrid::Iterator::advance_to_next_valid_row() {
-  while (row_it != row_end && col_it == row_it->end()) {
-    ++row_it;
-    if (row_it != row_end)
-      col_it = row_it->begin();
-  }
-}
-
-char &CharGrid::Iterator::operator*() const { return *col_it; }
-
-CharGrid::Iterator &CharGrid::Iterator::operator++() { // Pre-increment
-  ++col_it;
-  advance_to_next_valid_row();
-  return *this;
-}
-
-bool CharGrid::Iterator::operator!=(const CharGrid::Iterator &other) const {
-  return row_it != other.row_it ||
-         (row_it != row_end && col_it != other.col_it);
 }

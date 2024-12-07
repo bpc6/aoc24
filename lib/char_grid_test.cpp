@@ -1,6 +1,7 @@
 #include "char_grid.h"
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
+#include <ranges>
 
 class GridTest : public testing::Test {
 protected:
@@ -54,11 +55,4 @@ TEST_F(GridTest, AsNearD) {
 TEST_F(GridTest, HeightAndWidth) {
   EXPECT_EQ(grid_.height(), 2);
   EXPECT_EQ(grid_.width(), 3);
-}
-
-TEST_F(GridTest, RangeFor) {
-  std::vector<char> options = {'a', 'b', 'c', 'd', 'e', 'a'};
-  for (auto c : grid_) {
-    EXPECT_TRUE(std::ranges::find(options, c) != options.end());
-  }
 }
