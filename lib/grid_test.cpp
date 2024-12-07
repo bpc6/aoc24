@@ -1,4 +1,4 @@
-#include "char_grid.h"
+#include "grid.h"
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 #include <ranges>

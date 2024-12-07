@@ -1,7 +1,7 @@
-#include "char_grid.h"
+#include "grid.h"
 #include <ranges>
 
-Grid::Grid(const vec2d &&char_grid) : grid_(std::move(char_grid)) {}
+Grid::Grid(const vec2d &&grid) : grid_(std::move(grid)) {}
 
 char &Grid::operator[](Eigen::Vector2i coord) {
   return grid_[coord.y()][coord.x()];

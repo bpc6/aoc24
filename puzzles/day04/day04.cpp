@@ -1,5 +1,5 @@
 #include "day04.h"
-#include "char_grid.h"
+#include "grid.h"
 #include "parsing.h"
 
 int count_xmas(const Grid &grid) {

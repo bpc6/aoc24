@@ -8,7 +8,7 @@ protected:
   vec2d grid_;
 
 public:
-  explicit Grid(const vec2d &&char_grid);
+  explicit Grid(const vec2d &&grid);
   char &operator[](Eigen::Vector2i coord);
   const char &operator[](Eigen::Vector2i coord) const;
   size_t height() const;
