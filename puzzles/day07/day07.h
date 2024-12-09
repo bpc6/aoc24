@@ -5,7 +5,8 @@
 #include <string>
 #include <vector>
 
-std::vector<std::vector<std::function<int(int, int)>>> op_combos(size_t slots);
+std::vector<std::vector<std::function<long(long, long)>>>
+op_combos(size_t slots);
 
 bool solvable(int solution, const std::vector<int> &numbers);
 

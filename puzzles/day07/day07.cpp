@@ -3,10 +3,11 @@
 #include <algorithm>
 #include <ranges>
 
-std::vector<std::vector<std::function<int(int, int)>>> op_combos(size_t slots) {
-  std::vector<std::function<int(int, int)>> operators{std::multiplies<int>(),
-                                                      std::plus<int>()};
-  std::vector<std::vector<std::function<int(int, int)>>> result{{}};
+std::vector<std::vector<std::function<long(long, long)>>>
+op_combos(size_t slots) {
+  std::vector<std::function<long(long, long)>> operators{std::multiplies<>(),
+                                                         std::plus<>()};
+  std::vector<std::vector<std::function<long(long, long)>>> result{{}};
 
   for (auto i = 0; i < slots; ++i) {
     auto tmp(result);
@@ -20,7 +21,7 @@ std::vector<std::vector<std::function<int(int, int)>>> op_combos(size_t slots) {
   return result;
 }
 
-bool solvable(int solution, const std::vector<int> &numbers) {
+bool solvable(long solution, const std::vector<int> &numbers) {
   auto num_operators = numbers.size() - 1;
   for (const auto &op_combo : op_combos(num_operators)) {
     auto val = op_combo[0](numbers[0], numbers[1]);
@@ -33,6 +34,17 @@ bool solvable(int solution, const std::vector<int> &numbers) {
   return false;
 }
 
-long part1(const std::string &filename) { return 0; }
+long part1(const std::string &filename) {
+  auto lines = readLines(PARENT_DIR "/" + filename);
+  long total = 0;
+  for (const auto &line : lines) {
+    auto soln = stol(split(line, ':')[0]);
+    auto nums = ints(split(line, ':')[1]);
+    if (solvable(soln, nums)) {
+      total += soln;
+    }
+  }
+  return total;
+}
 
 long part2(const std::string &filename) { return 0; }
