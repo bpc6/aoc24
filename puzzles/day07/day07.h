@@ -14,11 +14,12 @@ std::vector<std::vector<T>> op_combos(size_t slots,
 
   for (auto i = 0; i < slots; ++i) {
     auto tmp(result);
-    std::ranges::copy(tmp, std::back_inserter(result));
-    //    std::ranges::copy(tmp, std::back_inserter(result));
+    for (size_t j = 0; j < operators.size() - 1; ++j) {
+      std::ranges::copy(tmp, std::back_inserter(result));
+    }
     for (auto [combo_idx, combo] : std::views::enumerate(result)) {
-      auto op_idx = combo_idx < result.size() / 2 ? 0 : 1;
-      auto op_idx_2 = combo_idx % operators.size();
+      size_t chunk_size = result.size() / operators.size();
+      auto op_idx = combo_idx / chunk_size;
       combo.push_back(operators[op_idx]);
     }
   }
