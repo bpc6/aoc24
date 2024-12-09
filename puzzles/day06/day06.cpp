@@ -28,13 +28,12 @@ int check_for_loop(const Grid<char> &grid,
                    const Grid<std::vector<Eigen::Vector2i>> &visited,
                    Eigen::Vector2i curr, const Eigen::Vector2i &dir) {
   auto new_dir = rotate(dir);
-  Eigen::Vector2i next;
-  while (grid.has_coord(next = curr + new_dir) && grid[next] != '#') {
+  while (grid.has_coord(curr) && grid[curr] != '#') {
     if (std::find(visited[curr].begin(), visited[curr].end(), new_dir) !=
         visited[curr].end()) {
       return 1;
     }
-    curr = next;
+    curr += new_dir;
   }
   return 0;
 }
@@ -47,6 +46,8 @@ int count_loopers(Grid<char> grid) {
   int counter = 0;
 
   while (grid.has_coord(next = curr + direction)) {
+    auto x = curr.x();
+    auto y = curr.y();
     if (grid[next] == '#') {
       direction = rotate(direction);
     } else {
