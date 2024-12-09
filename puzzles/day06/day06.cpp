@@ -1,6 +1,8 @@
 #include "day06.h"
 #include "grid.h"
 #include "parsing.h"
+#include <map>
+#include <set>
 
 Eigen::Vector2i rotate(const Eigen::Vector2i &dir) {
   Eigen::Matrix2i rot{{0, -1}, {1, 0}};
@@ -24,21 +26,32 @@ size_t count_visited(const Grid<char> &grid) {
   return 1 + visited.find_coords(1).size();
 }
 
-int check_for_loop(Grid<char> grid, Grid<std::vector<Eigen::Vector2i>> visited,
-                   Eigen::Vector2i curr, Eigen::Vector2i direction) {
+struct Vector2iCompare {
+  bool operator()(const Eigen::Vector2i &a, const Eigen::Vector2i &b) const {
+    if (a.x() != b.x())
+      return a.x() < b.x();
+    return a.y() < b.y();
+  }
+};
+
+int check_for_loop(
+    Grid<char> grid,
+    std::map<Eigen::Vector2i, std::set<Eigen::Vector2i, Vector2iCompare>,
+             Vector2iCompare>
+        obstacles,
+    Eigen::Vector2i curr, Eigen::Vector2i direction) {
   grid[curr + direction] = '#';
   Eigen::Vector2i next;
   while (grid.has_coord(next = curr + direction)) {
     auto x = curr.x();
     auto y = curr.y();
     if (grid[next] == '#') {
-      visited[curr].push_back(direction);
+      if (obstacles[next].contains(direction)) {
+        return 1;
+      }
+      obstacles[next].insert(direction);
       direction = rotate(direction);
-    } else if (std::find(visited[curr].begin(), visited[curr].end(),
-                         direction) != visited[curr].end()) {
-      return 1;
     } else {
-      visited[curr].push_back(direction);
       curr = next;
     }
   }
@@ -46,7 +59,9 @@ int check_for_loop(Grid<char> grid, Grid<std::vector<Eigen::Vector2i>> visited,
 }
 
 int count_loopers(const Grid<char> &grid) {
-  Grid<std::vector<Eigen::Vector2i>> visited(grid.height(), grid.width(), {});
+  std::map<Eigen::Vector2i, std::set<Eigen::Vector2i, Vector2iCompare>,
+           Vector2iCompare>
+      obstacles;
   auto curr = grid.find_coords('^')[0];
   Eigen::Vector2i direction{0, -1}, next;
 
@@ -56,12 +71,15 @@ int count_loopers(const Grid<char> &grid) {
     auto x = curr.x();
     auto y = curr.y();
     if (grid[next] == '#') {
+      if (obstacles[next].contains(direction)) {
+        // loop
+      }
+      obstacles[next].insert(direction);
       direction = rotate(direction);
     } else {
-      counter += check_for_loop(grid, visited, curr, direction);
+      counter += check_for_loop(grid, obstacles, curr, direction);
       curr = next;
     }
-    visited[curr].push_back(direction);
   }
   return counter;
 }
