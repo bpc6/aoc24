@@ -24,21 +24,28 @@ size_t count_visited(const Grid<char> &grid) {
   return 1 + visited.find_coords(1).size();
 }
 
-int check_for_loop(const Grid<char> &grid,
-                   const Grid<std::vector<Eigen::Vector2i>> &visited,
-                   Eigen::Vector2i curr, const Eigen::Vector2i &dir) {
-  auto new_dir = rotate(dir);
-  while (grid.has_coord(curr) && grid[curr] != '#') {
-    if (std::find(visited[curr].begin(), visited[curr].end(), new_dir) !=
-        visited[curr].end()) {
+int check_for_loop(Grid<char> grid, Grid<std::vector<Eigen::Vector2i>> visited,
+                   Eigen::Vector2i curr, Eigen::Vector2i direction) {
+  grid[curr + direction] = '#';
+  Eigen::Vector2i next;
+  while (grid.has_coord(next = curr + direction)) {
+    auto x = curr.x();
+    auto y = curr.y();
+    if (grid[next] == '#') {
+      visited[curr].push_back(direction);
+      direction = rotate(direction);
+    } else if (std::find(visited[curr].begin(), visited[curr].end(),
+                         direction) != visited[curr].end()) {
       return 1;
+    } else {
+      visited[curr].push_back(direction);
+      curr = next;
     }
-    curr += new_dir;
   }
   return 0;
 }
 
-int count_loopers(Grid<char> grid) {
+int count_loopers(const Grid<char> &grid) {
   Grid<std::vector<Eigen::Vector2i>> visited(grid.height(), grid.width(), {});
   auto curr = grid.find_coords('^')[0];
   Eigen::Vector2i direction{0, -1}, next;
