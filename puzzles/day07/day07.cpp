@@ -1,24 +1,5 @@
 #include "day07.h"
 #include "parsing.h"
-#include <algorithm>
-#include <ranges>
-
-std::vector<std::vector<std::function<long(long, long)>>>
-op_combos(size_t slots,
-          const std::vector<std::function<long(long, long)>> &operators) {
-  std::vector<std::vector<std::function<long(long, long)>>> result{{}};
-
-  for (auto i = 0; i < slots; ++i) {
-    auto tmp(result);
-    std::ranges::copy(tmp, std::back_inserter(result));
-    for (auto [combo_idx, combo] : std::views::enumerate(result)) {
-      auto op_idx = combo_idx < result.size() / 2 ? 0 : 1;
-      combo.push_back(operators[op_idx]);
-    }
-  }
-
-  return result;
-}
 
 bool solvable(long solution, const std::vector<int> &numbers,
               const std::vector<std::function<long(long, long)>> &operators) {
@@ -47,4 +28,19 @@ long part1(const std::string &filename) {
   return total;
 }
 
-long part2(const std::string &filename) { return 0; }
+long concat(long a, long b) {
+  return stol(std::to_string(a) + std::to_string(b));
+}
+
+long part2(const std::string &filename) {
+  auto lines = readLines(PARENT_DIR "/" + filename);
+  long total = 0;
+  for (const auto &line : lines) {
+    auto soln = stol(split(line, ':')[0]);
+    auto nums = ints(split(line, ':')[1]);
+    if (solvable(soln, nums, {std::multiplies<>(), std::plus<>(), concat})) {
+      total += soln;
+    }
+  }
+  return total;
+}
