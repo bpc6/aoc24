@@ -4,9 +4,8 @@
 #include <ranges>
 
 std::vector<std::vector<std::function<long(long, long)>>>
-op_combos(size_t slots) {
-  std::vector<std::function<long(long, long)>> operators{std::multiplies<>(),
-                                                         std::plus<>()};
+op_combos(size_t slots,
+          const std::vector<std::function<long(long, long)>> &operators) {
   std::vector<std::vector<std::function<long(long, long)>>> result{{}};
 
   for (auto i = 0; i < slots; ++i) {
@@ -21,9 +20,10 @@ op_combos(size_t slots) {
   return result;
 }
 
-bool solvable(long solution, const std::vector<int> &numbers) {
+bool solvable(long solution, const std::vector<int> &numbers,
+              const std::vector<std::function<long(long, long)>> &operators) {
   auto num_operators = numbers.size() - 1;
-  for (const auto &op_combo : op_combos(num_operators)) {
+  for (const auto &op_combo : op_combos(num_operators, operators)) {
     auto val = op_combo[0](numbers[0], numbers[1]);
     for (size_t i = 1; i < op_combo.size(); ++i) {
       val = op_combo[i](val, numbers[i + 1]);
@@ -40,7 +40,7 @@ long part1(const std::string &filename) {
   for (const auto &line : lines) {
     auto soln = stol(split(line, ':')[0]);
     auto nums = ints(split(line, ':')[1]);
-    if (solvable(soln, nums)) {
+    if (solvable(soln, nums, {std::multiplies<>(), std::plus<>()})) {
       total += soln;
     }
   }

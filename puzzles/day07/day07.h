@@ -6,9 +6,11 @@
 #include <vector>
 
 std::vector<std::vector<std::function<long(long, long)>>>
-op_combos(size_t slots);
+op_combos(size_t slots,
+          const std::vector<std::function<long(long, long)>> &operators);
 
-bool solvable(int solution, const std::vector<int> &numbers);
+bool solvable(long solution, const std::vector<int> &numbers,
+              const std::vector<std::function<long(long, long)>> &operators);
 
 long part1(const std::string &filename);
 long part2(const std::string &filename);
