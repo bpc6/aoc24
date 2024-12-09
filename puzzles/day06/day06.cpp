@@ -30,8 +30,6 @@ int check_for_loop(const Grid<char> &grid,
   auto new_dir = rotate(dir);
   Eigen::Vector2i next;
   while (grid.has_coord(next = curr + new_dir) && grid[next] != '#') {
-    //    auto found_val = visited[curr].has_value() ? visited[curr].value() :
-    //    Eigen::Vector2i{0,0};
     if (std::find(visited[curr].begin(), visited[curr].end(), new_dir) !=
         visited[curr].end()) {
       return 1;
