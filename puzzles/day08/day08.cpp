@@ -15,7 +15,9 @@ long part1(const std::string &filename) {
     const auto coords = grid.find_coords(c);
     for (const auto [idx, coord] : std::views::enumerate(coords)) {
       for (const auto next : std::views::drop(coords, idx + 1)) {
-        for (const auto p : {coord - next, next - coord}) {
+        const auto delta = next - coord;
+        const std::vector<Eigen::Vector2i> pts{coord - delta, next + delta};
+        for (const auto p : pts) {
           if (grid.has_coord(p) && std::ranges::find(found, p) == found.end()) {
             found.push_back(p);
           }
