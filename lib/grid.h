@@ -1,5 +1,6 @@
 #include <Eigen/Dense>
 #include <ranges>
+#include <set>
 #include <string>
 #include <vector>
 
@@ -41,6 +42,16 @@ public:
       }
     }
     return result;
+  }
+
+  [[nodiscard]] std::vector<T> find_unique() const {
+    std::set<T> s;
+    for (auto const row : grid_) {
+      for (auto const val : row) {
+        s.insert(val);
+      }
+    }
+    return {s.begin(), s.end()};
   }
 
   [[nodiscard]] std::vector<Eigen::Vector2i>
