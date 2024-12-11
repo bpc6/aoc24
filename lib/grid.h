@@ -22,9 +22,9 @@ public:
     return grid_[coord.y()][coord.x()];
   }
 
-  size_t height() const { return grid_.size(); }
-  size_t width() const { return grid_[0].size(); }
-  size_t size() const { return this->height() * this->width(); }
+  [[nodiscard]] size_t height() const { return grid_.size(); }
+  [[nodiscard]] size_t width() const { return grid_[0].size(); }
+  [[nodiscard]] size_t size() const { return this->height() * this->width(); }
 
   [[nodiscard]] bool has_coord(const Eigen::Vector2i &coord) const {
     return coord.y() >= 0 && coord.y() < this->height() && coord.x() >= 0 &&
