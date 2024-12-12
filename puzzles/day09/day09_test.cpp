@@ -1,12 +1,15 @@
 #include "day09.h"
+#include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
 TEST(CompressDisc, TinyExample) {
-  EXPECT_EQ(compress_disc("12345"), "022111222");
+  EXPECT_THAT(compress_disc("12345"),
+              testing::ElementsAre(0, 2, 2, 1, 1, 1, 2, 2, 2));
 }
 TEST(CompressDisc, Example) {
-  EXPECT_EQ(compress_disc("2333133121414131402"),
-            "0099811188827773336446555566");
+  EXPECT_THAT(compress_disc("2333133121414131402"),
+              testing::ElementsAre(0, 0, 9, 9, 8, 1, 1, 1, 8, 8, 8, 2, 7, 7, 7,
+                                   3, 3, 3, 6, 4, 4, 6, 5, 5, 5, 5, 6, 6));
 }
 
 TEST(Day09Test, Part1) { EXPECT_EQ(part1("test.txt"), 1928); }
