@@ -74,6 +74,19 @@ size_t part1(const std::string &filename) {
   return calc_checksum(compress_disc(readLines(PARENT_DIR "/" + filename)[0]));
 }
 
+void find_file_that_fits(size_t front_fid, size_t back_fid, int front_remaining,
+                         int back_remaining, auto back_it,
+                         std::vector<size_t> &result) {
+  while (back_fid > front_fid) {
+    if (back_remaining <= front_remaining) {
+      std::ranges::copy(std::vector<size_t>(back_remaining, back_fid),
+                        std::back_inserter(result));
+      return;
+    }
+    advance_back(back_it, back_remaining, back_fid);
+  }
+}
+
 std::vector<size_t> compress_disc_whole_files(const std::string &discmap) {
   auto back_fid = discmap.size() / 2;
   auto back_it = discmap.rbegin();
@@ -99,7 +112,11 @@ std::vector<size_t> compress_disc_whole_files(const std::string &discmap) {
       front_remaining -= back_remaining;
       advance_back(back_it, back_remaining, back_fid);
     } else if (front_remaining < back_remaining) {
+      find_file_that_fits(front_fid, back_fid, front_remaining, back_remaining,
+                          back_it, result);
+
       advance_front(front_it, front_remaining, front_fid);
+      advance_back(back_it, back_remaining, back_fid);
       front_is_file = true;
     }
 
