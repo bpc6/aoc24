@@ -4,6 +4,12 @@
 #include <numeric>
 #include <ranges>
 
+void advance_back(auto &back_it, int &back_remaining, size_t &back_fid) {
+  back_it += 2;
+  back_remaining = *back_it - '0';
+  back_fid -= 1;
+}
+
 std::vector<size_t> compress_disc(const std::string &discmap) {
   auto back_fid = discmap.size() / 2;
   auto back_it = discmap.rbegin();
@@ -35,15 +41,11 @@ std::vector<size_t> compress_disc(const std::string &discmap) {
       std::ranges::copy(std::vector<size_t>(back_remaining, back_fid),
                         std::back_inserter(result));
       front_remaining -= back_remaining;
-      back_it += 2;
-      back_remaining = *back_it - '0';
-      back_fid -= 1;
+      advance_back(back_it, back_remaining, back_fid);
     } else {
       std::ranges::copy(std::vector<size_t>(back_remaining, back_fid),
                         std::back_inserter(result));
-      back_it += 2;
-      back_remaining = *back_it - '0';
-      back_fid -= 1;
+      advance_back(back_it, back_remaining, back_fid);
 
       front_it += 1;
       front_remaining = *front_it - '0';
