@@ -16,7 +16,6 @@ std::vector<size_t> compress_disc(const std::string &discmap) {
   auto back_remaining = *back_it - '0';
   std::vector<size_t> result{};
   while (front_it <= back_it.base()) {
-    auto tmp = front_it == back_it.base();
     auto front_remaining = *front_it - '0';
 
     if (front_is_file && (back_fid > front_fid)) {
@@ -57,7 +56,7 @@ size_t calc_checksum(const std::vector<size_t> &compressed) {
 }
 
 size_t part1(const std::string &filename) {
-  return calc_checksum(compress_disc(readFile(PARENT_DIR "/" + filename)));
+  return calc_checksum(compress_disc(readLines(PARENT_DIR "/" + filename)[0]));
 }
 
 size_t part2(const std::string &filename) { return 0; }
