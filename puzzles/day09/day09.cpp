@@ -22,10 +22,6 @@ void skip_to_next_file(size_t &back_fid,
   back_fid -= 1;
 }
 
-bool space_is_free(int front_remaining) {
-  return front_remaining > 0;
-}
-
 std::vector<size_t> compress_disc(const std::string &discmap) {
   auto back_fid = discmap.size() / 2;
   bool back_is_file = discmap.size() % 2;
@@ -49,7 +45,7 @@ std::vector<size_t> compress_disc(const std::string &discmap) {
         ++back_it;
         back_is_file = !back_is_file;
       }
-      while (space_is_free(front_remaining) && back_behind_front(back_fid, front_fid)) {
+      while ((front_remaining > 0) && back_behind_front(back_fid, front_fid)) {
         if (back_remaining == 0) {
           skip_to_next_file(back_fid, back_it, back_remaining);
         } else {
