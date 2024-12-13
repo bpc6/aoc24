@@ -10,6 +10,12 @@ void advance_back(auto &back_it, int &back_remaining, size_t &back_fid) {
   back_fid -= 1;
 }
 
+void advance_front(auto &front_it, int &front_remaining, size_t &front_fid) {
+  front_it += 1;
+  front_remaining = *front_it - '0';
+  front_fid += 1;
+}
+
 std::vector<size_t> compress_disc(const std::string &discmap) {
   auto back_fid = discmap.size() / 2;
   auto back_it = discmap.rbegin();
@@ -33,9 +39,7 @@ std::vector<size_t> compress_disc(const std::string &discmap) {
       std::ranges::copy(std::vector<size_t>(front_remaining, back_fid),
                         std::back_inserter(result));
       back_remaining -= front_remaining;
-      front_it += 1;
-      front_remaining = *front_it - '0';
-      front_fid += 1;
+      advance_front(front_it, front_remaining, front_fid);
       front_is_file = true;
     } else if (back_remaining < front_remaining) {
       std::ranges::copy(std::vector<size_t>(back_remaining, back_fid),
@@ -46,10 +50,7 @@ std::vector<size_t> compress_disc(const std::string &discmap) {
       std::ranges::copy(std::vector<size_t>(back_remaining, back_fid),
                         std::back_inserter(result));
       advance_back(back_it, back_remaining, back_fid);
-
-      front_it += 1;
-      front_remaining = *front_it - '0';
-      front_fid += 1;
+      advance_front(front_it, front_remaining, front_fid);
       front_is_file = true;
     }
   }
