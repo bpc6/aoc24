@@ -4,24 +4,6 @@
 #include <numeric>
 #include <ranges>
 
-
-void move_back_to_first_available(size_t back_fid, std::vector<size_t> &result, int &back_remaining,
-                                  int &front_remaining) {
-  result.push_back(back_fid);
-  front_remaining -= 1;
-  back_remaining -= 1;
-}
-
-void skip_to_next_file(size_t &back_fid,
-                       std::basic_string<char, std::char_traits<char>, std::allocator<char>>::const_reverse_iterator &back_it,
-                       int &back_remaining) {
-  back_it += 2;
-  back_remaining = *back_it - '0';
-  back_fid -= 1;
-}
-
-bool back_is_file(const std::string& discmap) {return  discmap.size() % 2;}
-
 std::vector<size_t> compress_disc(const std::string &discmap) {
   auto back_fid = discmap.size() / 2;
   auto back_it = discmap.rbegin();
@@ -31,28 +13,49 @@ std::vector<size_t> compress_disc(const std::string &discmap) {
   auto front_it = discmap.begin();
 
   auto back_remaining = *back_it - '0';
+  auto front_remaining = *front_it - '0';
   std::vector<size_t> result{};
-  while (back_fid >= front_fid) {
-    auto front_remaining = *front_it - '0';
+  while (back_fid > front_fid) {
 
-    if (front_is_file && (back_fid > front_fid)) {
+    if (front_is_file) {
       std::ranges::copy(std::vector<size_t>(front_remaining, front_fid),
                         std::back_inserter(result));
+      front_it += 1;
+      front_remaining = *front_it - '0';
+      front_is_file = false;
+    } else if (front_remaining < back_remaining) {
+      std::ranges::copy(std::vector<size_t>(front_remaining, back_fid),
+                        std::back_inserter(result));
+      back_remaining -= front_remaining;
+      front_it += 1;
+      front_remaining = *front_it - '0';
       front_fid += 1;
+      front_is_file = true;
+    } else if (back_remaining < front_remaining) {
+      std::ranges::copy(std::vector<size_t>(back_remaining, back_fid),
+                        std::back_inserter(result));
+      front_remaining -= back_remaining;
+      back_it += 2;
+      back_remaining = *back_it - '0';
+      back_fid -= 1;
+    } else {
+      std::ranges::copy(std::vector<size_t>(back_remaining, back_fid),
+                        std::back_inserter(result));
+      back_it += 2;
+      back_remaining = *back_it - '0';
+      back_fid -= 1;
+
+      front_it += 1;
+      front_remaining = *front_it - '0';
+      front_fid += 1;
+      front_is_file = true;
     }
-    else {
-      while ((front_remaining > 0) && (back_fid >= front_fid)) {
-        if (back_remaining == 0) {
-          skip_to_next_file(back_fid, back_it, back_remaining);
-        } else {
-          move_back_to_first_available(back_fid, result, back_remaining, front_remaining);
-        }
-      }
-    }
-    front_it += 1;
-    front_is_file = !front_is_file;
   }
 
+  if (front_is_file) {
+    std::ranges::copy(std::vector<size_t>(back_remaining, back_fid),
+                      std::back_inserter(result));
+  }
   return result;
 }
 
