@@ -5,8 +5,6 @@
 #include <ranges>
 
 
-bool back_behind_front(size_t back_fid, size_t front_fid) { return back_fid >= front_fid; }
-
 void move_back_to_first_available(size_t back_fid, std::vector<size_t> &result, int &back_remaining,
                                   int &front_remaining) {
   result.push_back(back_fid);
@@ -45,7 +43,7 @@ std::vector<size_t> compress_disc(const std::string &discmap) {
         ++back_it;
         back_is_file = !back_is_file;
       }
-      while ((front_remaining > 0) && back_behind_front(back_fid, front_fid)) {
+      while ((front_remaining > 0) && (back_fid >= front_fid)) {
         if (back_remaining == 0) {
           skip_to_next_file(back_fid, back_it, back_remaining);
         } else {
