@@ -43,7 +43,6 @@ std::vector<size_t> compress_disc(const std::string &discmap) {
     if (front_is_file && (back_fid > front_fid)) {
       std::ranges::copy(std::vector<size_t>(front_remaining, front_fid),
                         std::back_inserter(result));
-      front_it += 1;
       front_fid += 1;
     } else {
       if (!back_is_file) {
@@ -57,8 +56,8 @@ std::vector<size_t> compress_disc(const std::string &discmap) {
           move_back_to_first_available(back_fid, result, back_remaining, front_remaining);
         }
       }
-      front_it += 1;
     }
+    front_it += 1;
     front_is_file = !front_is_file;
   }
 
