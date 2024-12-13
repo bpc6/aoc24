@@ -20,9 +20,10 @@ void skip_to_next_file(size_t &back_fid,
   back_fid -= 1;
 }
 
+bool back_is_file(const std::string& discmap) {return  discmap.size() % 2;}
+
 std::vector<size_t> compress_disc(const std::string &discmap) {
   auto back_fid = discmap.size() / 2;
-  bool back_is_file = discmap.size() % 2;
   auto back_it = discmap.rbegin();
 
   size_t front_fid = 0;
@@ -31,18 +32,15 @@ std::vector<size_t> compress_disc(const std::string &discmap) {
 
   auto back_remaining = *back_it - '0';
   std::vector<size_t> result{};
-  while (front_it <= back_it.base()) {
+  while (back_fid >= front_fid) {
     auto front_remaining = *front_it - '0';
 
     if (front_is_file && (back_fid > front_fid)) {
       std::ranges::copy(std::vector<size_t>(front_remaining, front_fid),
                         std::back_inserter(result));
       front_fid += 1;
-    } else {
-      if (!back_is_file) {
-        ++back_it;
-        back_is_file = !back_is_file;
-      }
+    }
+    else {
       while ((front_remaining > 0) && (back_fid >= front_fid)) {
         if (back_remaining == 0) {
           skip_to_next_file(back_fid, back_it, back_remaining);
