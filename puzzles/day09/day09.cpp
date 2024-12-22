@@ -78,6 +78,11 @@ struct file {
   size_t id;
   int size;
   size_t loc;
+
+  [[nodiscard]] size_t checksum() const {
+    return id * std::ranges::fold_left(std::views::iota(loc, loc + size), 0,
+                                       std::plus<>{});
+  };
 };
 
 struct space {
@@ -101,7 +106,7 @@ every_other(const std::string &intseq) {
   return {left, right};
 }
 
-std::vector<size_t> compress_disc_whole_files(const std::string &discmap) {
+size_t compress_disc_whole_files(const std::string &discmap) {
   auto [files, spaces] = every_other(discmap);
   std::ranges::reverse(files);
   for (auto &file : files) {
@@ -116,15 +121,13 @@ std::vector<size_t> compress_disc_whole_files(const std::string &discmap) {
   }
 
   std::ranges::sort(files, [](file f1, file f2) { return f1.loc < f2.loc; });
-  std::vector<size_t> result;
-  for (const auto &file : files) {
-    std::ranges::copy(std::vector<size_t>(file.size, file.id),
-                      std::back_inserter(result));
+  size_t result = 0;
+  for (const auto &f : files) {
+    result += f.checksum();
   }
   return result;
 }
 
 size_t part2(const std::string &filename) {
-  return calc_checksum(
-      compress_disc_whole_files(readLines(PARENT_DIR "/" + filename)[0]));
+  return compress_disc_whole_files(readLines(PARENT_DIR "/" + filename)[0]);
 }
