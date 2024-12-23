@@ -78,21 +78,16 @@ struct file {
   };
 };
 
-struct space {
-  int size;
-  size_t loc;
-};
-
-std::pair<std::vector<file>, std::vector<space>>
+std::pair<std::vector<file>, std::vector<file>>
 every_other(const std::string &intseq) {
   std::vector<file> left;
-  std::vector<space> right;
+  std::vector<file> right;
   size_t curr_loc{0};
   for (auto [idx, c] : std::views::enumerate(intseq)) {
     if (idx % 2 == 0) {
       left.push_back(file(idx / 2, c - '0', curr_loc));
     } else {
-      right.push_back(space(c - '0', curr_loc));
+      right.push_back(file(0, c - '0', curr_loc));
     }
     curr_loc += c - '0';
   }
