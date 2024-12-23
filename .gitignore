@@ -3,6 +3,9 @@
 *build*/
 **/input.txt
 
+# Python
+__pycache__/
+
 # Prerequisites
 *.d
 
