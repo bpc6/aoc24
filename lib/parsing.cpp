@@ -47,6 +47,22 @@ std::vector<std::vector<char>> readCharMatrix(const std::string &file_path) {
   return mat;
 }
 
+std::vector<std::vector<int>> readIntMatrix(const std::string &file_path) {
+  auto char_matrix = readCharMatrix(file_path);
+  std::vector<std::vector<int>> int_matrix;
+  int_matrix.reserve(char_matrix.size());
+
+  std::ranges::transform(
+      char_matrix, std::back_inserter(int_matrix), [](const auto &row) {
+        std::vector<int> int_row;
+        int_row.reserve(row.size());
+        std::ranges::transform(row, std::back_inserter(int_row),
+                               [](char c) { return c - '0'; });
+        return int_row;
+      });
+  return int_matrix;
+}
+
 bool all_digits(const std::string &s) {
   return std::ranges::all_of(s, [](unsigned char c) { return isdigit(c); });
 }

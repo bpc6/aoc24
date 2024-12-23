@@ -19,5 +19,5 @@ RUN apt-get update && apt-get install -y \
 RUN update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-13 50 && \
     update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-13 50
 
-# Verify installed versions
-RUN gcc --version && g++ --version && cmake --version
+RUN mkdir -p /home/ubuntu/.config/gdb && \
+    echo "add-auto-load-safe-path /tmp/aoc24/.gdbinit" > /home/ubuntu/.config/gdb/gdbinit

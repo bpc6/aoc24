@@ -62,10 +62,18 @@ public:
       for (auto x = std::max(0, target.x() - 1);
            x < std::min(static_cast<int>(this->width()), target.x() + 2); ++x) {
         if ((*this)[{x, y}] == c) {
-          result.push_back({x, y});
+          result.emplace_back(x, y);
         }
       }
     }
     return result;
+  }
+
+  [[nodiscard]] constexpr Eigen::Vector2i left() const { return {-1, 0}; }
+  [[nodiscard]] constexpr Eigen::Vector2i right() const { return {1, 0}; }
+  [[nodiscard]] constexpr Eigen::Vector2i up() const { return {0, -1}; }
+  [[nodiscard]] constexpr Eigen::Vector2i down() const { return {0, 1}; }
+  [[nodiscard]] constexpr std::vector<Eigen::Vector2i> directions() const {
+    return {left(), right(), up(), down()};
   }
 };
