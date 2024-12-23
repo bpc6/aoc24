@@ -99,7 +99,7 @@ size_t compress_disc_whole_files(const std::string &discmap) {
   std::ranges::reverse(files);
   for (auto &file : files) {
     for (auto &space : spaces) {
-      if (file.size <= space.size) {
+      if (space.loc <= file.loc && file.size <= space.size) {
         file.loc = space.loc;
         space.size -= file.size;
         space.loc += file.size;
