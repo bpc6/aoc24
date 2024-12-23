@@ -4,7 +4,7 @@
 #include <string>
 #include <vector>
 
-long part1(const std::string &filename);
-long part2(const std::string &filename);
+size_t part1(const std::string &filename);
+size_t part2(const std::string &filename);
 
 #endif // AOC24_DAY10_H
