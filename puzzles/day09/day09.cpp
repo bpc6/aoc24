@@ -108,7 +108,8 @@ size_t compress_disc_whole_files(const std::string &discmap) {
     }
   }
 
-  std::ranges::sort(files, [](file f1, file f2) { return f1.loc < f2.loc; });
+  std::ranges::sort(
+      files, [](const file &f1, const file &f2) { return f1.loc < f2.loc; });
   size_t result = 0;
   for (const auto &f : files) {
     result += f.checksum();
