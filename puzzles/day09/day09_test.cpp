@@ -22,3 +22,4 @@ TEST(Day09Test, Part1) { EXPECT_EQ(part1("test.txt"), 1928); }
 TEST(Day09Test, Part2) { EXPECT_EQ(part2("test.txt"), 2858); }
 
 TEST(Day09Test, Part1Real) { EXPECT_EQ(part1("input.txt"), 6216544403458); }
+TEST(Day09Test, Part2Real) { EXPECT_NE(part2("input.txt"), 8398917771459); }
