@@ -30,12 +30,11 @@ size_t count_trails_to_9(const Grid<int> &grid, Eigen::Vector2i curr) {
 }
 
 size_t count_trail_scores(const Grid<int> &grid) {
-  std::stack<Eigen::Vector2i> stack;
-  size_t count = 0;
-  for (const auto &z : grid.find_coords(0)) {
-    count += count_trails_to_9(grid, z);
-  }
-  return count;
+  return std::ranges::fold_left(
+      grid.find_coords(0) | std::views::transform([&grid](const auto &coord) {
+        return count_trails_to_9(grid, coord);
+      }),
+      0, std::plus<>{});
 }
 
 size_t part1(const std::string &filename) {
