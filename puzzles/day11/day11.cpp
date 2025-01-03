@@ -17,8 +17,7 @@ std::pair<unsigned long, unsigned long> split_digits(unsigned long n) {
   return {n / divisor, n % divisor};
 }
 
-void update(std::vector<size_t> &curr,
-            std::map<size_t, std::vector<size_t>> &map) {
+void update(std::vector<size_t> &curr) {
   std::vector<size_t> next;
   for (auto item : curr) {
     if (item == 0) {
@@ -35,13 +34,8 @@ void update(std::vector<size_t> &curr,
 }
 
 size_t size_after_updates(std::vector<size_t> curr, int count) {
-  std::map<size_t, std::vector<size_t>> map;
-  for (const auto item : curr) {
-    map[item] = {1};
-  }
-
   for (int i = 0; i < count; ++i) {
-    update(curr, map);
+    update(curr);
   }
   return curr.size();
 }
@@ -61,5 +55,5 @@ size_t part2(const std::string &filename) {
     curr.push_back(n);
   }
 
-  return size_after_updates(curr, 75);
+  return 0;
 }
