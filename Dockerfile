@@ -24,7 +24,3 @@ RUN update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-13 50 && \
 
 RUN mkdir -p /home/ubuntu/.config/gdb && \
     echo "add-auto-load-safe-path /tmp/aoc24/.gdbinit" > /home/ubuntu/.config/gdb/gdbinit
-
-RUN sh -c 'echo kernel.perf_event_paranoid=1 >> /etc/sysctl.d/99-perf.conf'
-RUN sh -c 'echo kernel.kptr_restrict=0 >> /etc/sysctl.d/99-perf.conf'
-RUN sh -c 'sysctl --system'
