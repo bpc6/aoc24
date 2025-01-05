@@ -17,22 +17,6 @@ std::pair<unsigned long, unsigned long> split_digits(unsigned long n) {
   return {n / divisor, n % divisor};
 }
 
-void update(std::vector<size_t> &curr) {
-  std::vector<size_t> next;
-  for (auto item : curr) {
-    if (item == 0) {
-      next.push_back(1);
-    } else if (count_digits(item) % 2 == 0) {
-      const auto [left, right] = split_digits(item);
-      next.push_back(left);
-      next.push_back(right);
-    } else {
-      next.push_back(item * 2024);
-    }
-  }
-  curr = std::move(next);
-}
-
 size_t size_after_updates(size_t curr, int count) {
   if (count == 0)
     return 1;
@@ -54,4 +38,10 @@ size_t part1(const std::string &filename) {
                                 0, std::plus<>{});
 }
 
-size_t part2(const std::string &filename) { return 0; }
+size_t part2(const std::string &filename) {
+  return std::ranges::fold_left(ints(readFile(PARENT_DIR "/" + filename)) |
+                                    std::views::transform([](int a) {
+                                      return size_after_updates(a, 75);
+                                    }),
+                                0, std::plus<>{});
+}
