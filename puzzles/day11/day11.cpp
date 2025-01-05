@@ -30,10 +30,14 @@ size_t size_after_updates(size_t curr, int count) {
   return size_after_updates(curr * 2024, count - 1);
 }
 
+size_t size_after_updates_mem(size_t curr, int count) {
+  return size_after_updates(curr, count);
+}
+
 size_t part1(const std::string &filename) {
   return std::ranges::fold_left(ints(readFile(PARENT_DIR "/" + filename)) |
                                     std::views::transform([](int a) {
-                                      return size_after_updates(a, 25);
+                                      return size_after_updates_mem(a, 25);
                                     }),
                                 0, std::plus<>{});
 }
@@ -41,7 +45,7 @@ size_t part1(const std::string &filename) {
 size_t part2(const std::string &filename) {
   return std::ranges::fold_left(ints(readFile(PARENT_DIR "/" + filename)) |
                                     std::views::transform([](int a) {
-                                      return size_after_updates(a, 75);
+                                      return size_after_updates_mem(a, 75);
                                     }),
                                 0, std::plus<>{});
 }
