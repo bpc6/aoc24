@@ -33,27 +33,25 @@ void update(std::vector<size_t> &curr) {
   curr = std::move(next);
 }
 
-size_t size_after_updates(std::vector<size_t> curr, int count) {
-  for (int i = 0; i < count; ++i) {
-    update(curr);
+size_t size_after_updates(size_t curr, int count) {
+  if (count == 0)
+    return 1;
+  if (curr == 0)
+    return size_after_updates(1, count - 1);
+  if (count_digits(curr) % 2 == 0) {
+    const auto [left, right] = split_digits(curr);
+    return size_after_updates(left, count - 1) +
+           size_after_updates(right, count - 1);
   }
-  return curr.size();
+  return size_after_updates(curr * 2024, count - 1);
 }
 
 size_t part1(const std::string &filename) {
-  std::vector<size_t> curr;
-  for (const auto &n : ints(readFile(PARENT_DIR "/" + filename))) {
-    curr.push_back(n);
-  }
-
-  return size_after_updates(curr, 25);
+  return std::ranges::fold_left(ints(readFile(PARENT_DIR "/" + filename)) |
+                                    std::views::transform([](int a) {
+                                      return size_after_updates(a, 25);
+                                    }),
+                                0, std::plus<>{});
 }
 
-size_t part2(const std::string &filename) {
-  std::vector<size_t> curr;
-  for (const auto &n : ints(readFile(PARENT_DIR "/" + filename))) {
-    curr.push_back(n);
-  }
-
-  return 0;
-}
+size_t part2(const std::string &filename) { return 0; }
