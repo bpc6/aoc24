@@ -4,8 +4,9 @@ project(aoc24)
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-#set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -O0")
-#set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O0")
+# for profiling
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -O0")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O0")
 
 # Add Google Test using FetchContent
 include(FetchContent)
@@ -43,3 +44,4 @@ add_subdirectory(puzzles/day07)
 add_subdirectory(puzzles/day08)
 add_subdirectory(puzzles/day09)
 add_subdirectory(puzzles/day10)
+add_subdirectory(puzzles/day11)

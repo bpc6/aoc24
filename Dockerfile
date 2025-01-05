@@ -12,8 +12,11 @@ RUN apt-get update && apt-get install -y \
     ca-certificates \
     cmake \
     make \
-    git
-
+    git \
+    linux-tools-common \
+    linux-tools-generic \
+    linux-tools-$(uname -r) \
+    && apt-get clean
 
 # Set GCC 13 as the default compiler
 RUN update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-13 50 && \
