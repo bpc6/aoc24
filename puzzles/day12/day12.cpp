@@ -15,30 +15,37 @@ size_t perimeter(const Grid<char> &grid, char c) {
   return perim;
 }
 
-size_t count_groups(const Grid<char> &grid, char c) {
-  size_t groups = 0;
+size_t count_cost(const Grid<char> &grid, char c) {
+  size_t total = 0;
   std::vector<Eigen::Vector2i> seen;
   for (const auto &pos : grid.find_coords(c)) {
     if (std::ranges::find(seen, pos) == seen.end()) {
+      size_t perim = 0;
+      size_t area = 0;
 
       std::stack<Eigen::Vector2i> stack;
       stack.push(pos);
       while (!stack.empty()) {
         auto curr = stack.top();
-        stack.pop();
         seen.push_back(curr);
 
+        stack.pop();
+        area += 1;
         for (const auto &dir : grid.directions()) {
           if (grid.has_coord(curr + dir) && grid[curr + dir] == c &&
               std::ranges::find(seen, curr + dir) == seen.end()) {
             stack.emplace(curr + dir);
+            seen.emplace_back(curr + dir);
+          }
+          if (!grid.has_coord(curr + dir) || grid[curr + dir] != c) {
+            perim += 1;
           }
         }
       }
-      groups += 1;
+      total += perim * area;
     }
   }
-  return groups;
+  return total;
 }
 
 size_t part1(const std::string &filename) {
@@ -46,8 +53,7 @@ size_t part1(const std::string &filename) {
 
   size_t total = 0;
   for (auto c : grid.find_unique()) {
-    total +=
-        perimeter(grid, c) * grid.find_coords(c).size() / count_groups(grid, c);
+    total += count_cost(grid, c);
   }
 
   return total;
