@@ -4,13 +4,11 @@
 #include <numeric>
 #include <stack>
 
-size_t perimeter(const Grid<char> &grid, char c) {
+size_t perimeter(const Grid<char> &grid, const Eigen::Vector2i &pos) {
   size_t perim = 0;
-  for (const auto &pos : grid.find_coords(c)) {
-    for (const auto &dir : grid.directions()) {
-      if (!grid.has_coord(pos + dir) || grid[pos + dir] != c)
-        perim += 1;
-    }
+  for (const auto &dir : grid.directions()) {
+    if (!grid.has_coord(pos + dir) || grid[pos + dir] != grid[pos])
+      perim += 1;
   }
   return perim;
 }
@@ -31,14 +29,12 @@ size_t count_cost(const Grid<char> &grid, char c) {
 
         stack.pop();
         area += 1;
+        perim += perimeter(grid, curr);
         for (const auto &dir : grid.directions()) {
           if (grid.has_coord(curr + dir) && grid[curr + dir] == c &&
               std::ranges::find(seen, curr + dir) == seen.end()) {
             stack.emplace(curr + dir);
             seen.emplace_back(curr + dir);
-          }
-          if (!grid.has_coord(curr + dir) || grid[curr + dir] != c) {
-            perim += 1;
           }
         }
       }
