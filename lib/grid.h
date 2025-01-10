@@ -1,4 +1,5 @@
 #include <Eigen/Dense>
+#include <array>
 #include <ranges>
 #include <set>
 #include <string>
@@ -69,11 +70,11 @@ public:
     return result;
   }
 
-  [[nodiscard]] constexpr Eigen::Vector2i left() const { return {-1, 0}; }
-  [[nodiscard]] constexpr Eigen::Vector2i right() const { return {1, 0}; }
-  [[nodiscard]] constexpr Eigen::Vector2i up() const { return {0, -1}; }
-  [[nodiscard]] constexpr Eigen::Vector2i down() const { return {0, 1}; }
-  [[nodiscard]] constexpr std::vector<Eigen::Vector2i> directions() const {
+  [[nodiscard]] static constexpr Eigen::Vector2i left() { return {-1, 0}; }
+  [[nodiscard]] static constexpr Eigen::Vector2i right() { return {1, 0}; }
+  [[nodiscard]] static constexpr Eigen::Vector2i up() { return {0, -1}; }
+  [[nodiscard]] static constexpr Eigen::Vector2i down() { return {0, 1}; }
+  [[nodiscard]] static constexpr std::array<Eigen::Vector2i, 4> directions() {
     return {left(), right(), up(), down()};
   }
 };
