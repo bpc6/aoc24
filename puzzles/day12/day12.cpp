@@ -16,9 +16,9 @@ std::vector<Eigen::Vector2i> perimeter_coords(const Grid<char> &grid,
 
 size_t count_cost(const Grid<char> &grid, char c) {
   size_t total = 0;
-  std::vector<Eigen::Vector2i> seen;
+  Grid<int> seen{grid.height(), grid.width(), 0};
   for (const auto &pos : grid.find_coords(c)) {
-    if (std::ranges::find(seen, pos) == seen.end()) {
+    if (!seen[pos]) {
       size_t perim = 0;
       size_t area = 0;
 
@@ -26,16 +26,16 @@ size_t count_cost(const Grid<char> &grid, char c) {
       stack.push(pos);
       while (!stack.empty()) {
         auto curr = stack.top();
-        seen.push_back(curr);
+        seen[curr] = 1;
 
         stack.pop();
         area += 1;
         perim += perimeter_coords(grid, curr).size();
         for (const auto &dir : grid.directions()) {
           if (grid.has_coord(curr + dir) && grid[curr + dir] == c &&
-              std::ranges::find(seen, curr + dir) == seen.end()) {
+              !seen[curr + dir]) {
             stack.emplace(curr + dir);
-            seen.emplace_back(curr + dir);
+            seen[curr + dir] = 1;
           }
         }
       }
