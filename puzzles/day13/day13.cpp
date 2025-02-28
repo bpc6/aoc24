@@ -17,24 +17,20 @@ std::tuple<Vec, Vec, Vec> parse_input(std::string paragraph) {
   return {parse_line(lines[0]), parse_line(lines[1]), parse_line(lines[2])};
 }
 
-size_t part1(const std::string &filename) {
+size_t day13_solution(const std::string &filename, Vec add_to_prize = {0, 0}) {
   size_t total = 0;
   auto txt = readFile(PARENT_DIR "/" + filename);
   for (const auto grp : split(txt, "\n\n")) {
     auto [a, b, p] = parse_input(grp);
-    total += cost_of_prize(a, b, p);
+    total += cost_of_prize(a, b, p + add_to_prize);
   }
   return total;
 }
 
+size_t part1(const std::string &filename) { return day13_solution(filename); }
+
 size_t part2(const std::string &filename) {
-  size_t total = 0;
-  auto txt = readFile(PARENT_DIR "/" + filename);
-  for (const auto grp : split(txt, "\n\n")) {
-    auto [a, b, p] = parse_input(grp);
-    total += cost_of_prize(a, b, p + Vec{10000000000000, 10000000000000});
-  }
-  return total;
+  return day13_solution(filename, Vec{10000000000000, 10000000000000});
 }
 
 bool near_whole(double d) {
