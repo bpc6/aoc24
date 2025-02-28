@@ -1,8 +1,28 @@
 #include "day13.h"
 #include "parsing.h"
+#include <cctype>
 #include <ranges>
 
-size_t part1(const std::string &filename) { return 0; }
+int numeric_only(const std::string &s) {
+  auto nums = s | std::views::filter([](char c) { return std::isdigit(c); });
+  return std::stoi(std::string{nums.begin(), nums.end()});
+}
+
+size_t part1(const std::string &filename) {
+  size_t total = 0;
+  auto txt = readFile(PARENT_DIR "/" + filename);
+  for (const auto grp : split(txt, "\n\n")) {
+    const auto lines = split(grp, '\n');
+    Eigen::Vector2i a = {numeric_only(split(lines[0], ',')[0]),
+                         numeric_only(split(lines[0], ',')[1])};
+    Eigen::Vector2i b = {numeric_only(split(lines[1], ',')[0]),
+                         numeric_only(split(lines[1], ',')[1])};
+    Eigen::Vector2i p = {numeric_only(split(lines[2], ',')[0]),
+                         numeric_only(split(lines[2], ',')[1])};
+    total += cost_of_prize(a, b, p);
+  }
+  return total;
+}
 
 size_t part2(const std::string &filename) { return 0; }
 
