@@ -34,27 +34,27 @@ size_t part2(const std::string &filename) {
   auto txt = readFile(PARENT_DIR "/" + filename);
   for (const auto grp : split(txt, "\n\n")) {
     auto [a, b, p] = parse_input(grp);
-    total += cost_of_prize(a, b, p + Vec{0, 0});
+    total += cost_of_prize(a, b, p + Vec{10000000000000, 10000000000000});
   }
   return total;
 }
 
+bool near_whole(float f) {
+  constexpr float epsilon = 1e-3f;
+  return std::abs(f - std::round(f)) <= epsilon;
+}
+
 size_t cost_of_prize(const Vec &dir_a, const Vec &dir_b, const Vec &prize) {
-  Vec curr = {0, 0};
-  int cost = 0;
-  for (int a_depth : std::views::iota(0, 100)) {
-    Vec tmp = curr;
-    int tmp_cost = cost;
-    for (int b_depth : std::views::iota(0, 100)) {
-      if (tmp == prize)
-        return tmp_cost;
-      if (tmp.x() > prize.x() or tmp.y() > prize.y())
-        break;
-      tmp += dir_b;
-      tmp_cost += 1;
-    }
-    curr += dir_a;
-    cost += 3;
-  }
+  Eigen::Matrix2f mat;
+  mat << dir_a.cast<float>(), dir_b.cast<float>();
+
+  Eigen::Matrix2f inv;
+  bool invertible;
+  mat.computeInverseWithCheck(inv, invertible);
+  if (not invertible)
+    return 0;
+  auto soln = (inv * prize.cast<float>()).eval();
+  if (near_whole(soln.x()) and near_whole(soln.y()))
+    return std::round(soln.x()) * 3 + std::round(soln.y());
   return 0;
 }
