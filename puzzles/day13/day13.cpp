@@ -8,17 +8,18 @@ int numeric_only(const std::string &s) {
   return std::stoi(std::string{nums.begin(), nums.end()});
 }
 
+Eigen::Vector2i parse_line(std::string line) {
+  return {numeric_only(split(line, ',')[0]), numeric_only(split(line, ',')[1])};
+}
+
 size_t part1(const std::string &filename) {
   size_t total = 0;
   auto txt = readFile(PARENT_DIR "/" + filename);
   for (const auto grp : split(txt, "\n\n")) {
     const auto lines = split(grp, '\n');
-    Eigen::Vector2i a = {numeric_only(split(lines[0], ',')[0]),
-                         numeric_only(split(lines[0], ',')[1])};
-    Eigen::Vector2i b = {numeric_only(split(lines[1], ',')[0]),
-                         numeric_only(split(lines[1], ',')[1])};
-    Eigen::Vector2i p = {numeric_only(split(lines[2], ',')[0]),
-                         numeric_only(split(lines[2], ',')[1])};
+    auto a = parse_line(lines[0]);
+    auto b = parse_line(lines[1]);
+    auto p = parse_line(lines[2]);
     total += cost_of_prize(a, b, p);
   }
   return total;
