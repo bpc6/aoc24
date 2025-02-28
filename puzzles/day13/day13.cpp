@@ -3,11 +3,9 @@
 #include <cctype>
 #include <ranges>
 
-using Vec = Eigen::Vector2i;
-
-int numeric_only(const std::string &s) {
+size_t numeric_only(const std::string &s) {
   auto nums = s | std::views::filter([](char c) { return std::isdigit(c); });
-  return std::stoi(std::string{nums.begin(), nums.end()});
+  return std::stol(std::string{nums.begin(), nums.end()});
 }
 
 Vec parse_line(std::string line) {

@@ -5,11 +5,12 @@
 #include <string>
 #include <vector>
 
+using Vec = Eigen::Matrix<size_t, 2, 1>;
+
 size_t part1(const std::string &filename);
 size_t part2(const std::string &filename);
 
-int numeric_only(const std::string &s);
-size_t cost_of_prize(const Eigen::Vector2i &dir_a, const Eigen::Vector2i &dir_b,
-                     const Eigen::Vector2i &prize);
+size_t numeric_only(const std::string &s);
+size_t cost_of_prize(const Vec &dir_a, const Vec &dir_b, const Vec &prize);
 
 #endif // AOC24_DAY13_H
