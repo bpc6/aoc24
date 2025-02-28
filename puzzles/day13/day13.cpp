@@ -39,21 +39,21 @@ size_t part2(const std::string &filename) {
   return total;
 }
 
-bool near_whole(float f) {
-  constexpr float epsilon = 1e-3f;
-  return std::abs(f - std::round(f)) <= epsilon;
+bool near_whole(double d) {
+  constexpr double epsilon = 1e-3f;
+  return std::abs(d - std::round(d)) <= epsilon;
 }
 
 size_t cost_of_prize(const Vec &dir_a, const Vec &dir_b, const Vec &prize) {
-  Eigen::Matrix2f mat;
-  mat << dir_a.cast<float>(), dir_b.cast<float>();
+  Eigen::Matrix2d mat;
+  mat << dir_a.cast<double>(), dir_b.cast<double>();
 
-  Eigen::Matrix2f inv;
+  Eigen::Matrix2d inv;
   bool invertible;
   mat.computeInverseWithCheck(inv, invertible);
   if (not invertible)
     return 0;
-  auto soln = (inv * prize.cast<float>()).eval();
+  auto soln = (inv * prize.cast<double>()).eval();
   if (near_whole(soln.x()) and near_whole(soln.y()))
     return std::round(soln.x()) * 3 + std::round(soln.y());
   return 0;
