@@ -47,3 +47,18 @@ void BotEnv::wrap_back_to_grid_() {
   while (pos_.y() >= height_)
     pos_ -= Vec{0, height_};
 }
+
+int MultiBotEnv::safety_factor() const {
+  std::vector<int> counts{0, 0, 0, 0};
+  for (const auto &env : envs_) {
+    int quad = 0;
+    if (env.pos().x() == width_ / 2 or env.pos().y() == height_ / 2)
+      continue;
+    if (env.pos().x() > width_ / 2)
+      quad += 1;
+    if (env.pos().y() > height_ / 2)
+      quad += 2;
+    counts[quad] += 1;
+  }
+  return std::ranges::fold_left(counts, 1, std::multiplies<>{});
+}

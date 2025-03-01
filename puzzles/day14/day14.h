@@ -30,10 +30,25 @@ BotEnv bot_env_factory(int w, int h, const std::string &s);
 
 class MultiBotEnv {
 public:
-  MultiBotEnv(int width, int height, std::vector<Vec> initial) {}
+  MultiBotEnv(int width, int height, std::initializer_list<Vec> initial)
+      : width_(width), height_(height) {
+    for (const auto &pos : initial) {
+      envs_.emplace_back(width, height, pos);
+    }
+  }
+  //  MultiBotEnv(int width, int height, const std::vector<std::string>&
+  //  bot_states) {
+  //    for (const auto &line : bot_states) {
+  //      envs_.emplace_back(bot_env_factory(width, height, line));
+  //    }
+  //  }
+
+  int safety_factor() const;
 
 private:
   std::vector<BotEnv> envs_;
+  int height_;
+  int width_;
 };
 
 #endif // AOC24_DAY14_H

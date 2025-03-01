@@ -19,6 +19,7 @@ TEST(MultiBotEnv, SafteyFactor) {
                    {4, 5},
                    {6, 1},
                    {6, 6}}};
+  EXPECT_EQ(env.safety_factor(), 12);
 }
 
 TEST(BotEnvFactory, GeneratesEnvWithCorrectPos) {
