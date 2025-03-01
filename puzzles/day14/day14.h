@@ -36,13 +36,14 @@ public:
       envs_.emplace_back(width, height, pos);
     }
   }
-  //  MultiBotEnv(int width, int height, const std::vector<std::string>&
-  //  bot_states) {
-  //    for (const auto &line : bot_states) {
-  //      envs_.emplace_back(bot_env_factory(width, height, line));
-  //    }
-  //  }
+  MultiBotEnv(int width, int height, const std::vector<std::string> &bot_states)
+      : width_(width), height_(height) {
+    for (const auto &line : bot_states) {
+      envs_.emplace_back(bot_env_factory(width, height, line));
+    }
+  }
 
+  void step();
   int safety_factor() const;
 
 private:

@@ -3,16 +3,10 @@
 #include <ranges>
 
 size_t part1(const std::string &filename, int width, int height) {
-  auto envs = readLines(PARENT_DIR "/" + filename) |
-              std::ranges::views::transform([width, height](auto line) {
-                return bot_env_factory(width, height, line);
-              });
-  for (int step_n : std::views::iota(0, 100)) {
-    for (auto env : envs) {
-      env.step();
-    }
-  }
-  return 0;
+  MultiBotEnv env{width, height, readLines(PARENT_DIR "/" + filename)};
+  for (int i : std::views::iota(0, 100))
+    env.step();
+  return env.safety_factor();
 }
 
 size_t part2(const std::string &filename, int width, int height) { return 0; }
@@ -61,4 +55,10 @@ int MultiBotEnv::safety_factor() const {
     counts[quad] += 1;
   }
   return std::ranges::fold_left(counts, 1, std::multiplies<>{});
+}
+
+void MultiBotEnv::step() {
+  for (auto &env : envs_) {
+    env.step();
+  }
 }
