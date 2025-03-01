@@ -10,3 +10,10 @@ TEST(BotEnv, StepsOnce) {
 
   EXPECT_EQ(env.pos(), Vec(4, 1));
 }
+
+TEST(BotEnv, StepsOnceWraps) {
+  BotEnv env{11, 7, {4, 1}, {2, -3}};
+  env.step();
+
+  EXPECT_EQ(env.pos(), Vec(6, 5));
+}

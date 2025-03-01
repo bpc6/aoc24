@@ -16,6 +16,8 @@ public:
   Vec pos() const;
 
 private:
+  void wrap_back_to_grid_();
+
   int width_;
   int height_;
   Vec pos_;
