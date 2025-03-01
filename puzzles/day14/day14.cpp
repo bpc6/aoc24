@@ -1,7 +1,19 @@
 #include "day14.h"
 #include "parsing.h"
+#include <ranges>
 
-size_t part1(const std::string &filename, int width, int height) { return 0; }
+size_t part1(const std::string &filename, int width, int height) {
+  auto envs = readLines(PARENT_DIR "/" + filename) |
+              std::ranges::views::transform([width, height](auto line) {
+                return bot_env_factory(width, height, line);
+              });
+  for (int step_n : std::views::iota(0, 100)) {
+    for (auto env : envs) {
+      env.step();
+    }
+  }
+  return 0;
+}
 
 size_t part2(const std::string &filename, int width, int height) { return 0; }
 

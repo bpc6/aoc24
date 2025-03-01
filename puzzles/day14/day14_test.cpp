@@ -4,6 +4,23 @@
 TEST(Day14Test, Part1) { EXPECT_EQ(part1("test.txt", 11, 7), 0); }
 TEST(Day14Test, Part2) { EXPECT_EQ(part2("test.txt", 11, 7), 0); }
 
+TEST(MultiBotEnv, SafteyFactor) {
+  MultiBotEnv env{11,
+                  7,
+                  {{6, 0},
+                   {6, 0},
+                   {9, 0},
+                   {0, 2},
+                   {1, 3},
+                   {2, 3},
+                   {5, 4},
+                   {3, 5},
+                   {4, 5},
+                   {4, 5},
+                   {6, 1},
+                   {6, 6}}};
+}
+
 TEST(BotEnvFactory, GeneratesEnvWithCorrectPos) {
   auto env = bot_env_factory(11, 7, "p=0,4 v=3,-3\n");
   EXPECT_EQ(env.pos(), Vec(0, 4));
