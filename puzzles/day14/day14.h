@@ -13,6 +13,7 @@ class BotEnv {
 public:
   BotEnv(int width, int height, Vec pos, Vec velo);
   void step();
+  Vec pos() const;
 
 private:
   int width_;
