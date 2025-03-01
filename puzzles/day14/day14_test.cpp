@@ -4,6 +4,11 @@
 TEST(Day14Test, Part1) { EXPECT_EQ(part1("test.txt", 11, 7), 0); }
 TEST(Day14Test, Part2) { EXPECT_EQ(part2("test.txt", 11, 7), 0); }
 
+TEST(BotEnvFactory, GeneratesEnvWithCorrectPos) {
+  auto env = bot_env_factory(11, 7, "p=0,4 v=3,-3\n");
+  EXPECT_EQ(env.pos(), Vec(0, 4));
+}
+
 TEST(BotEnv, StepsOnce) {
   BotEnv env{11, 7, {2, 4}, {2, -3}};
   env.step();

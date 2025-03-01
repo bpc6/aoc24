@@ -5,6 +5,16 @@ size_t part1(const std::string &filename, int width, int height) { return 0; }
 
 size_t part2(const std::string &filename, int width, int height) { return 0; }
 
+Vec vec_from_string(const std::string s) {
+  auto int_vec = ints(split(s, '=')[1], ',');
+  return {int_vec[0], int_vec[1]};
+}
+
+BotEnv bot_env_factory(int w, int h, const std::string &s) {
+  return BotEnv(w, h, vec_from_string(split(s)[0]),
+                vec_from_string(split(s)[1]));
+}
+
 BotEnv::BotEnv(int width, int height, Vec pos, Vec velo)
     : width_(width), height_(height), pos_(pos), velo_(velo) {}
 

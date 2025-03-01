@@ -4,10 +4,10 @@
 #include <Eigen/Dense>
 #include <string>
 
+using Vec = Eigen::Vector2i;
+
 size_t part1(const std::string &filename, int width, int height);
 size_t part2(const std::string &filename, int width, int height);
-
-using Vec = Eigen::Vector2i;
 
 class BotEnv {
 public:
@@ -23,5 +23,7 @@ private:
   Vec pos_;
   Vec velo_;
 };
+
+BotEnv bot_env_factory(int w, int h, const std::string &s);
 
 #endif // AOC24_DAY14_H
