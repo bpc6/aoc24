@@ -13,6 +13,12 @@ class BotEnv {
 public:
   BotEnv(int width, int height, Vec pos, Vec velo);
   void step();
+
+private:
+  int width_;
+  int height_;
+  Vec pos_;
+  Vec velo_;
 };
 
 #endif // AOC24_DAY14_H
