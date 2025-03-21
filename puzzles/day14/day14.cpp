@@ -10,7 +10,15 @@ size_t part1(const std::string &filename, int width, int height) {
   return env.safety_factor();
 }
 
-size_t part2(const std::string &filename, int width, int height) { return 0; }
+size_t part2(const std::string &filename, int width, int height) {
+  MultiBotEnv env{width, height, readLines(PARENT_DIR "/" + filename)};
+  size_t count = 0;
+  while (!env.all_unique()) {
+    env.step();
+    count += 1;
+  }
+  return count;
+}
 
 Vec vec_from_string(const std::string s) {
   auto int_vec = ints(split(s, '=')[1], ',');
