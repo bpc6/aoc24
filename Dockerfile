@@ -15,6 +15,7 @@ RUN apt-get update && apt-get install -y \
     git \
     linux-tools-common \
     linux-tools-generic \
+    linux-tools-6.8.0-52-generic \
     linux-tools-$(uname -r) \
     && apt-get clean
 
