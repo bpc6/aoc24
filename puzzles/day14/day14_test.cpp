@@ -22,6 +22,15 @@ TEST(MultiBotEnv, SafteyFactor) {
   EXPECT_EQ(env.safety_factor(), 12);
 }
 
+TEST(MultiBotEnv, AllUniqueTrueForAllUnique) {
+  MultiBotEnv env{11, 7, {{6, 0}, {9, 0}, {6, 1}, {6, 6}}};
+  EXPECT_TRUE(env.all_unique());
+}
+TEST(MultiBotEnv, AllUniqueFalseWhenDuplicate) {
+  MultiBotEnv env{11, 7, {{6, 0}, {9, 0}, {6, 1}, {9, 0}, {6, 6}}};
+  EXPECT_FALSE(env.all_unique());
+}
+
 TEST(BotEnvFactory, GeneratesEnvWithCorrectPos) {
   auto env = bot_env_factory(11, 7, "p=0,4 v=3,-3\n");
   EXPECT_EQ(env.pos(), Vec(0, 4));

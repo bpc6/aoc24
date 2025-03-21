@@ -1,5 +1,6 @@
 #include "day14.h"
 #include "parsing.h"
+#include <algorithm>
 #include <ranges>
 
 size_t part1(const std::string &filename, int width, int height) {
@@ -61,4 +62,18 @@ void MultiBotEnv::step() {
   for (auto &env : envs_) {
     env.step();
   }
+}
+
+bool MultiBotEnv::all_unique() const {
+  auto pos_views =
+      envs_ | std::views::transform([](auto env) { return env.pos(); });
+  std::vector<Vec> positions{pos_views.begin(), pos_views.end()};
+  auto vec_compare = [](const Vec &a, const Vec &b) {
+    if (a.x() == b.x())
+      return a.y() < b.y();
+    return a.x() < b.x();
+  };
+  std::ranges::sort(positions, vec_compare);
+  auto [ret, last] = std::ranges::unique(positions);
+  return ret == positions.end();
 }
