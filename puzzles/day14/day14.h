@@ -3,6 +3,7 @@
 
 #include <Eigen/Dense>
 #include <string>
+#include <utility>
 
 using Vec = Eigen::Vector2i;
 
@@ -13,9 +14,9 @@ class BotEnv {
 public:
   BotEnv(int width, int height, Vec pos, Vec velo);
   BotEnv(int width, int height, Vec pos)
-      : BotEnv(width, height, pos, Vec(0, 0)) {}
+      : BotEnv(width, height, std::move(pos), Vec(0, 0)) {}
   void step();
-  Vec pos() const;
+  [[nodiscard]] Vec pos() const;
 
 private:
   void wrap_back_to_grid_();
@@ -45,6 +46,7 @@ public:
 
   void step();
   int safety_factor() const;
+  bool all_unique() const;
 
 private:
   std::vector<BotEnv> envs_;
