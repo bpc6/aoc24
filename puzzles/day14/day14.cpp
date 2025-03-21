@@ -1,7 +1,7 @@
 #include "day14.h"
 #include "parsing.h"
-#include <algorithm>
 #include <ranges>
+#include <unordered_set>
 
 size_t part1(const std::string &filename, int width, int height) {
   MultiBotEnv env{width, height, readLines(PARENT_DIR "/" + filename)};
@@ -72,16 +72,23 @@ void MultiBotEnv::step() {
   }
 }
 
+namespace std {
+template <> struct hash<Eigen::Vector2i> {
+  std::size_t operator()(const Eigen::Vector2i &v) const {
+    return std::hash<int>()(v.x()) ^ (std::hash<int>()(v.y()) << 1);
+  }
+};
+} // namespace std
+
 bool MultiBotEnv::all_unique() const {
   auto pos_views =
       envs_ | std::views::transform([](auto env) { return env.pos(); });
-  std::vector<Vec> positions{pos_views.begin(), pos_views.end()};
-  auto vec_compare = [](const Vec &a, const Vec &b) {
-    if (a.x() == b.x())
-      return a.y() < b.y();
-    return a.x() < b.x();
-  };
-  std::ranges::sort(positions, vec_compare);
-  auto [ret, last] = std::ranges::unique(positions);
-  return ret == positions.end();
+
+  std::unordered_set<Vec> seen;
+  for (const auto &pos : pos_views) {
+    if (!seen.insert(pos).second) {
+      return false;
+    }
+  }
+  return true;
 }

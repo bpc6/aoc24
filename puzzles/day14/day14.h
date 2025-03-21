@@ -46,7 +46,7 @@ public:
 
   void step();
   int safety_factor() const;
-  bool all_unique() const;
+  [[nodiscard]] bool all_unique() const;
 
 private:
   std::vector<BotEnv> envs_;
