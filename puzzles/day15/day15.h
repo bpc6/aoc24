@@ -3,7 +3,7 @@
 
 #include <Eigen/Dense>
 #include <string>
-#include <unordered_map>
+#include <unordered_set>
 
 using Coord = Eigen::Vector2i;
 namespace std {
@@ -22,13 +22,15 @@ public:
   WarehouseBotEnv(Coord &&shape, std::initializer_list<Coord> walls,
                   std::initializer_list<Coord> crates, Coord &&init_pos);
   [[nodiscard]] std::string to_string() const;
+  bool is_wall(const Coord &c) const;
+  bool is_crate(const Coord &c) const;
+  void step(Coord dir);
 
 private:
-  enum Content { WALL, CRATE };
-  constexpr char to_char_(WarehouseBotEnv::Content cont) const;
   Coord shape_;
   Coord pos_;
-  std::unordered_map<Coord, Content> map_{};
+  std::unordered_set<Coord> walls_{};
+  std::unordered_set<Coord> crates_{};
 };
 
 #endif // AOC24_DAY15_H

@@ -11,21 +11,17 @@ WarehouseBotEnv::WarehouseBotEnv(Coord &&shape,
                                  std::initializer_list<Coord> walls,
                                  std::initializer_list<Coord> crates,
                                  Coord &&init_pos)
-    : shape_(std::move(shape)), pos_(std::move(init_pos)) {
-  for (const auto &wall : walls) {
-    map_[wall] = WALL;
-  }
-  for (const auto &crate : crates) {
-    map_[crate] = CRATE;
-  }
-}
+    : shape_(std::move(shape)), walls_(walls), crates_(crates),
+      pos_(std::move(init_pos)) {}
 
 std::string WarehouseBotEnv::to_string() const {
   std::string s;
   for (int y : std::views::iota(0, shape_.y())) {
     for (int x : std::views::iota(0, shape_.x())) {
-      if (map_.contains({x, y}))
-        s += to_char_(map_.at({x, y}));
+      if (is_wall({x, y}))
+        s += '#';
+      else if (is_crate({x, y}))
+        s += 'O';
       else if (pos_ == Coord{x, y})
         s += '@';
       else
@@ -35,10 +31,9 @@ std::string WarehouseBotEnv::to_string() const {
   }
   return s;
 }
-constexpr char WarehouseBotEnv::to_char_(WarehouseBotEnv::Content cont) const {
-  if (cont == WALL)
-    return '#';
-  if (cont == CRATE)
-    return 'O';
-  throw std::invalid_argument("Only WALL or CRATE");
+bool WarehouseBotEnv::is_wall(const Coord &c) const {
+  return walls_.contains(c);
+}
+bool WarehouseBotEnv::is_crate(const Coord &c) const {
+  return crates_.contains(c);
 }
