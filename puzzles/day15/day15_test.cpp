@@ -15,3 +15,8 @@ TEST_F(WarehouseBotEnvTest, CtorPlacesProperly) {
   std::string expected = "##@.\n#OO.\n....\n....\n";
   EXPECT_EQ(env.to_string(), expected);
 }
+
+TEST_F(WarehouseBotEnvTest, StepWithNoObstruction) {
+  env.step({1, 0});
+  EXPECT_EQ(env.get_pos(), (Coord{3, 0}));
+}

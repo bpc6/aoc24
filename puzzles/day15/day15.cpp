@@ -38,3 +38,5 @@ bool WarehouseBotEnv::is_crate(const Coord &c) const {
   return crates_.contains(c);
 }
 void WarehouseBotEnv::set_pos(const Coord &c) { pos_ = c; }
+Coord WarehouseBotEnv::get_pos() const { return pos_; }
+void WarehouseBotEnv::step(const Coord &dir) { pos_ += dir; }
