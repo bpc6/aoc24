@@ -24,6 +24,7 @@ public:
   [[nodiscard]] std::string to_string() const;
   bool is_wall(const Coord &c) const;
   bool is_crate(const Coord &c) const;
+  void set_pos(const Coord &c);
   void step(Coord dir);
 
 private:

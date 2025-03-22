@@ -37,3 +37,4 @@ bool WarehouseBotEnv::is_wall(const Coord &c) const {
 bool WarehouseBotEnv::is_crate(const Coord &c) const {
   return crates_.contains(c);
 }
+void WarehouseBotEnv::set_pos(const Coord &c) { pos_ = c; }
