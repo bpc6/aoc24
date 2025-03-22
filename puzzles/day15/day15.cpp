@@ -9,4 +9,11 @@ WarehouseBotEnv::WarehouseBotEnv(Coord shape,
                                  std::initializer_list<Coord> walls,
                                  std::initializer_list<Coord> crates,
                                  Coord init_pos)
-    : shape_(shape) {}
+    : shape_(shape), pos_(init_pos) {
+  for (const auto &wall : walls) {
+    map_[wall] = WALL;
+  }
+  for (const auto &crate : crates) {
+    map_[crate] = CRATE;
+  }
+}

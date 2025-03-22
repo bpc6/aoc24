@@ -25,6 +25,7 @@ public:
 private:
   enum Content { WALL, CRATE };
   Coord shape_;
+  Coord pos_;
   std::unordered_map<Coord, Content> map_{};
 };
 
