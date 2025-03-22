@@ -7,6 +7,8 @@ size_t part1(const std::string &filename) { return 0; }
 
 size_t part2(const std::string &filename) { return 0; }
 
+int gps_coordinate(const Coord &c) { return 100 * c.y() + c.x(); }
+
 WarehouseBotEnv::WarehouseBotEnv(Coord &&shape,
                                  std::initializer_list<Coord> walls,
                                  std::initializer_list<Coord> crates,

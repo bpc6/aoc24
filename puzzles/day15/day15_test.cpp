@@ -5,6 +5,8 @@ TEST(Day15Test, Part1) { EXPECT_EQ(part1("test.txt"), 0); }
 TEST(Day15Test, Part1Big) { EXPECT_EQ(part1("test_big.txt"), 0); }
 TEST(Day15Test, Part2) { EXPECT_EQ(part1("test.txt"), 0); }
 
+TEST(GPSCoord, IsCorrect) { EXPECT_EQ(gps_coordinate({4, 1}), 104); }
+
 class WarehouseBotEnvTest : public testing::Test {
 protected:
   WarehouseBotEnv env{

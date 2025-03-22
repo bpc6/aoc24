@@ -17,6 +17,8 @@ template <> struct hash<Eigen::Vector2i> {
 size_t part1(const std::string &filename);
 size_t part2(const std::string &filename);
 
+int gps_coordinate(const Coord &c);
+
 class WarehouseBotEnv {
 public:
   WarehouseBotEnv(Coord &&shape, std::initializer_list<Coord> walls,
