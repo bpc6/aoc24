@@ -18,5 +18,10 @@ TEST_F(WarehouseBotEnvTest, CtorPlacesProperly) {
 
 TEST_F(WarehouseBotEnvTest, StepWithNoObstruction) {
   env.step({1, 0});
-  EXPECT_EQ(env.get_pos(), (Coord{3, 0}));
+  EXPECT_EQ(env.get_pos(), Coord(3, 0));
+}
+
+TEST_F(WarehouseBotEnvTest, StepIntoWallDoesntMove) {
+  env.step({-1, 0});
+  EXPECT_EQ(env.get_pos(), Coord(2, 0));
 }
