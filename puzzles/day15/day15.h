@@ -21,11 +21,11 @@ class WarehouseBotEnv {
 public:
   WarehouseBotEnv(Coord &&shape, std::initializer_list<Coord> walls,
                   std::initializer_list<Coord> crates, Coord &&init_pos);
-  [[nodiscard]] std::string to_string();
+  [[nodiscard]] std::string to_string() const;
 
 private:
   enum Content { WALL, CRATE };
-  char to_char_(WarehouseBotEnv::Content cont);
+  constexpr char to_char_(WarehouseBotEnv::Content cont) const;
   Coord shape_;
   Coord pos_;
   std::unordered_map<Coord, Content> map_{};

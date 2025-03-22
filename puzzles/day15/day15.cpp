@@ -20,12 +20,12 @@ WarehouseBotEnv::WarehouseBotEnv(Coord &&shape,
   }
 }
 
-std::string WarehouseBotEnv::to_string() {
+std::string WarehouseBotEnv::to_string() const {
   std::string s;
   for (int y : std::views::iota(0, shape_.y())) {
     for (int x : std::views::iota(0, shape_.x())) {
       if (map_.contains({x, y}))
-        s += to_char_(map_[{x, y}]);
+        s += to_char_(map_.at({x, y}));
       else if (pos_ == Coord{x, y})
         s += '@';
       else
@@ -35,7 +35,7 @@ std::string WarehouseBotEnv::to_string() {
   }
   return s;
 }
-char WarehouseBotEnv::to_char_(WarehouseBotEnv::Content cont) {
+constexpr char WarehouseBotEnv::to_char_(WarehouseBotEnv::Content cont) const {
   if (cont == WALL)
     return '#';
   if (cont == CRATE)
