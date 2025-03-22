@@ -40,9 +40,8 @@ bool WarehouseBotEnv::is_crate(const Coord &c) const {
 void WarehouseBotEnv::set_pos(const Coord &c) { pos_ = c; }
 Coord WarehouseBotEnv::get_pos() const { return pos_; }
 void WarehouseBotEnv::step(const Coord &dir) {
-  const auto target = pos_ + dir;
-  if (move_crate_(target, dir))
-    set_pos(target);
+  if (move_crate_(pos_ + dir, dir))
+    set_pos(pos_ + dir);
 }
 bool WarehouseBotEnv::move_crate_(const Coord &pos, const Coord &dir) {
   if (is_wall(pos))
