@@ -37,3 +37,10 @@ TEST_F(WarehouseBotEnvTest, StepIntoCrateMovesCrates) {
   EXPECT_TRUE(env.is_crate({2, 2}));
   EXPECT_TRUE(env.is_crate({2, 3}));
 }
+
+TEST_F(WarehouseBotEnvTest, StepIntoBlockedCrateDoesntMove) {
+  env.set_pos({3, 1});
+  const auto before = env.to_string();
+  env.step({-1, 0});
+  EXPECT_EQ(env.to_string(), before);
+}

@@ -41,22 +41,19 @@ void WarehouseBotEnv::set_pos(const Coord &c) { pos_ = c; }
 Coord WarehouseBotEnv::get_pos() const { return pos_; }
 void WarehouseBotEnv::step(const Coord &dir) {
   const auto target = pos_ + dir;
-  if (is_wall(target))
-    return;
-  if (is_crate(target)) {
-    move_crate_(target, dir);
-  }
-  set_pos(target);
+  if (move_crate_(target, dir))
+    set_pos(target);
 }
 bool WarehouseBotEnv::move_crate_(const Coord &pos, const Coord &dir) {
-  const auto target = pos + dir;
-  if (is_wall(target))
+  if (is_wall(pos))
     return false;
-  bool result = true;
-  if (is_crate(target))
-    result = move_crate_(target, dir);
-  auto it = crates_.find(pos);
-  crates_.erase(it);
-  crates_.insert(target);
-  return result;
+  if (!is_crate(pos))
+    return true;
+  if (move_crate_(pos + dir, dir)) {
+    auto it = crates_.find(pos);
+    crates_.erase(it);
+    crates_.insert(pos + dir);
+    return true;
+  }
+  return false;
 }
