@@ -7,11 +7,11 @@ size_t part1(const std::string &filename) { return 0; }
 
 size_t part2(const std::string &filename) { return 0; }
 
-WarehouseBotEnv::WarehouseBotEnv(Coord shape,
+WarehouseBotEnv::WarehouseBotEnv(Coord &&shape,
                                  std::initializer_list<Coord> walls,
                                  std::initializer_list<Coord> crates,
-                                 Coord init_pos)
-    : shape_(shape), pos_(init_pos) {
+                                 Coord &&init_pos)
+    : shape_(std::move(shape)), pos_(std::move(init_pos)) {
   for (const auto &wall : walls) {
     map_[wall] = WALL;
   }

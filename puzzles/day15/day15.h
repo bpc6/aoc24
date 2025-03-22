@@ -19,9 +19,9 @@ size_t part2(const std::string &filename);
 
 class WarehouseBotEnv {
 public:
-  WarehouseBotEnv(Coord shape, std::initializer_list<Coord> walls,
-                  std::initializer_list<Coord> crates, Coord init_pos);
-  std::string to_string();
+  WarehouseBotEnv(Coord &&shape, std::initializer_list<Coord> walls,
+                  std::initializer_list<Coord> crates, Coord &&init_pos);
+  [[nodiscard]] std::string to_string();
 
 private:
   enum Content { WALL, CRATE };
