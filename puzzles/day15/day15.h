@@ -33,6 +33,7 @@ private:
   Coord pos_;
   std::unordered_set<Coord> walls_{};
   std::unordered_set<Coord> crates_{};
+  bool move_crate_(const Coord &pos, const Coord &dir);
 };
 
 #endif // AOC24_DAY15_H
