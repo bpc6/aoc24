@@ -7,6 +7,19 @@ TEST(Day15Test, Part2) { EXPECT_EQ(part1("test.txt"), 0); }
 
 TEST(GPSCoord, IsCorrect) { EXPECT_EQ(gps_coordinate({4, 1}), 104); }
 
+TEST(WarehouseBotEnvFromString, Works) {
+  std::string s = "########\n"
+                  "#..O.O.#\n"
+                  "##@.O..#\n"
+                  "#...O..#\n"
+                  "#.#.O..#\n"
+                  "#...O..#\n"
+                  "#......#\n"
+                  "########\n";
+  auto env = from_string(s);
+  EXPECT_EQ(env.to_string(), s);
+}
+
 class WarehouseBotEnvTest : public testing::Test {
 protected:
   WarehouseBotEnv env{
