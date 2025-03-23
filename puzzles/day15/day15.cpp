@@ -22,8 +22,8 @@ Coord from_char(char c) {
   if (c == '>')
     return {1, 0};
   if (c == '^')
-    return {0, 1};
-  return {0, -1};
+    return {0, -1};
+  return {0, 1};
 }
 
 WarehouseBotEnv from_string(std::string s) {
