@@ -23,7 +23,9 @@ Coord from_char(char c) {
     return {1, 0};
   if (c == '^')
     return {0, -1};
-  return {0, 1};
+  if (c == 'v')
+    return {0, 1};
+  return {0, 0};
 }
 
 WarehouseBotEnv from_string(std::string s) {
