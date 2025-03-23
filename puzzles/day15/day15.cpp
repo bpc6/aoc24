@@ -42,19 +42,25 @@ bool WarehouseBotEnv::is_crate(const Coord &c) const {
 void WarehouseBotEnv::set_pos(const Coord &c) { pos_ = c; }
 Coord WarehouseBotEnv::get_pos() const { return pos_; }
 void WarehouseBotEnv::step(const Coord &dir) {
-  if (move_crate_(pos_ + dir, dir))
+  if (can_move_(dir)) {
+    shift_crates_(dir);
     set_pos(pos_ + dir);
-}
-bool WarehouseBotEnv::move_crate_(const Coord &pos, const Coord &dir) {
-  if (is_wall(pos))
-    return false;
-  if (!is_crate(pos))
-    return true;
-  if (move_crate_(pos + dir, dir)) {
-    auto it = crates_.find(pos);
-    crates_.erase(it);
-    crates_.insert(pos + dir);
-    return true;
   }
-  return false;
+}
+bool WarehouseBotEnv::can_move_(const Coord &dir) {
+  auto target = (pos_ + dir).eval();
+  while (is_crate(target))
+    target += dir;
+  return !is_wall(target);
+}
+void WarehouseBotEnv::shift_crates_(const Coord &dir) {
+  auto target = (pos_ + dir).eval();
+  std::vector<Coord> shifted;
+  while (is_crate(target)) {
+    auto it = crates_.find(target);
+    crates_.erase(it);
+    shifted.emplace_back(target + dir);
+    target += dir;
+  }
+  crates_.insert(shifted.begin(), shifted.end());
 }
