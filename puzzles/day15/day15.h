@@ -18,17 +18,19 @@ size_t part1(const std::string &filename);
 size_t part2(const std::string &filename);
 
 int gps_coordinate(const Coord &c);
+Coord from_char(char c);
 
 class WarehouseBotEnv {
 public:
-  WarehouseBotEnv(Coord &&shape, std::initializer_list<Coord> walls,
-                  std::initializer_list<Coord> crates, Coord &&init_pos);
+  WarehouseBotEnv(Coord &&shape, std::unordered_set<Coord> walls,
+                  std::unordered_set<Coord> crates, Coord &&init_pos);
   [[nodiscard]] std::string to_string() const;
   bool is_wall(const Coord &c) const;
   bool is_crate(const Coord &c) const;
   Coord get_pos() const;
   void set_pos(const Coord &c);
   void step(const Coord &dir);
+  size_t sum_gps() const;
 
 private:
   Coord shape_;
@@ -38,5 +40,7 @@ private:
   bool can_move_(const Coord &dir);
   void shift_crates_(const Coord &dir);
 };
+
+WarehouseBotEnv from_string(std::string s);
 
 #endif // AOC24_DAY15_H
