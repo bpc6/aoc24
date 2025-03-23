@@ -19,6 +19,24 @@ TEST(WarehouseBotEnvFromString, Works) {
   auto env = from_string(s);
   EXPECT_EQ(env.to_string(), s);
 }
+TEST(WarehouseBotEnvFromString, DoubleWorks) {
+  std::string s = "#######\n"
+                  "#...#.#\n"
+                  "#.....#\n"
+                  "#..OO@#\n"
+                  "#..O..#\n"
+                  "#.....#\n"
+                  "#######\n";
+  std::string expected = "##############\n"
+                         "##......##..##\n"
+                         "##..........##\n"
+                         "##....O.O.@.##\n"
+                         "##....O.....##\n"
+                         "##..........##\n"
+                         "##############\n";
+  auto env = from_string_double(s);
+  EXPECT_EQ(env.to_string(), expected);
+}
 
 class WarehouseBotEnvTest : public testing::Test {
 protected:

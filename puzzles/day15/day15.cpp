@@ -28,7 +28,7 @@ Coord from_char(char c) {
   return {0, 0};
 }
 
-WarehouseBotEnv from_string(std::string s) {
+WarehouseBotEnv from_string(const std::string &s) {
   std::unordered_set<Coord> walls, crates;
   Coord init_pos = {-1, -1};
   for (const auto &[y, line] : split(s) | std::views::enumerate) {
@@ -43,6 +43,24 @@ WarehouseBotEnv from_string(std::string s) {
   }
   return WarehouseBotEnv({split(s)[0].length(), split(s).size()}, walls, crates,
                          std::move(init_pos));
+}
+
+WarehouseBotEnv from_string_double(const std::string &s) {
+  std::unordered_set<Coord> walls, crates;
+  Coord init_pos = {-1, -1};
+  for (const auto &[y, line] : split(s) | std::views::enumerate) {
+    for (const auto &[x, c] : line | std::views::enumerate) {
+      if (c == '#') {
+        walls.emplace(x * 2, y);
+        walls.emplace(x * 2 + 1, y);
+      } else if (c == 'O')
+        crates.emplace(x * 2, y);
+      else if (c == '@')
+        init_pos = {x * 2, y};
+    }
+  }
+  return WarehouseBotEnv({split(s)[0].length() * 2, split(s).size()}, walls,
+                         crates, std::move(init_pos));
 }
 
 WarehouseBotEnv::WarehouseBotEnv(Coord &&shape, std::unordered_set<Coord> walls,

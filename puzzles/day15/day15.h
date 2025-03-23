@@ -41,6 +41,7 @@ private:
   void shift_crates_(const Coord &dir);
 };
 
-WarehouseBotEnv from_string(std::string s);
+WarehouseBotEnv from_string(const std::string &s);
+WarehouseBotEnv from_string_double(const std::string &s);
 
 #endif // AOC24_DAY15_H
