@@ -8,6 +8,10 @@ add_executable(
         day14_test
         day14_test.cpp
         day14.cpp
+        bot_env_test.cpp
+        bot_env.cpp
+        multi_bot_env_test.cpp
+        multi_bot_env.cpp
 )
 target_link_libraries(
         day14_test
