@@ -2,6 +2,7 @@
 #include "parsing.h"
 #include <ranges>
 #include <unordered_set>
+#include <utility>
 
 size_t part1(const std::string &filename, int width, int height) {
   MultiBotEnv env{width, height, readLines(PARENT_DIR "/" + filename)};
@@ -20,18 +21,18 @@ size_t part2(const std::string &filename, int width, int height) {
   return count;
 }
 
-Vec vec_from_string(const std::string s) {
+Vec vec_from_string(const std::string &s) {
   auto int_vec = ints(split(s, '=')[1], ',');
   return {int_vec[0], int_vec[1]};
 }
 
 BotEnv bot_env_factory(int w, int h, const std::string &s) {
-  return BotEnv(w, h, vec_from_string(split(s)[0]),
-                vec_from_string(split(s)[1]));
+  return {w, h, vec_from_string(split(s)[0]), vec_from_string(split(s)[1])};
 }
 
 BotEnv::BotEnv(int width, int height, Vec pos, Vec velo)
-    : width_(width), height_(height), pos_(pos), velo_(velo) {}
+    : width_(width), height_(height), pos_(std::move(pos)),
+      velo_(std::move(velo)) {}
 
 void BotEnv::step() {
   pos_ += velo_;
@@ -82,7 +83,7 @@ template <> struct hash<Eigen::Vector2i> {
 
 bool MultiBotEnv::all_unique() const {
   auto pos_views =
-      envs_ | std::views::transform([](auto env) { return env.pos(); });
+      envs_ | std::views::transform([](const auto &env) { return env.pos(); });
 
   std::unordered_set<Vec> seen;
   for (const auto &pos : pos_views) {
