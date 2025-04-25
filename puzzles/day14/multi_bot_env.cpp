@@ -2,6 +2,22 @@
 #include <ranges>
 #include <unordered_set>
 
+MultiBotEnv::MultiBotEnv(int width, int height,
+                         std::initializer_list<Vec> initial)
+    : width_(width), height_(height) {
+  for (const auto &pos : initial) {
+    envs_.emplace_back(width, height, pos);
+  }
+}
+
+MultiBotEnv::MultiBotEnv(int width, int height,
+                         const std::vector<std::string> &bot_states)
+    : width_(width), height_(height) {
+  for (const auto &line : bot_states) {
+    envs_.emplace_back(bot_env_factory(width, height, line));
+  }
+}
+
 int MultiBotEnv::safety_factor() const {
   std::vector<int> counts{0, 0, 0, 0};
   for (const auto &env : envs_) {

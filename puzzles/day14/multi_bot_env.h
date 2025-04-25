@@ -1,5 +1,5 @@
-#ifndef AOC24_MULIT_BOT_ENV_H
-#define AOC24_MULIT_BOT_ENV_H
+#ifndef AOC24_MULTI_BOT_ENV_H
+#define AOC24_MULTI_BOT_ENV_H
 
 #include "bot_env.h"
 #include <initializer_list>
@@ -8,20 +8,16 @@
 
 class MultiBotEnv {
 public:
-  MultiBotEnv(int width, int height, std::initializer_list<Vec> initial)
-      : width_(width), height_(height) {
-    for (const auto &pos : initial) {
-      envs_.emplace_back(width, height, pos);
-    }
-  }
-  MultiBotEnv(int width, int height, const std::vector<std::string> &bot_states)
-      : width_(width), height_(height) {
-    for (const auto &line : bot_states) {
-      envs_.emplace_back(bot_env_factory(width, height, line));
-    }
-  }
+  MultiBotEnv(int width, int height, std::initializer_list<Vec> initial);
+  MultiBotEnv(int width, int height,
+              const std::vector<std::string> &bot_states);
 
   void step();
+
+  /**
+   * Multiplies the number of bots in each quadrant. Ignore bots exactly in the
+   * middle (horiz or vertical).
+   */
   int safety_factor() const;
   [[nodiscard]] bool all_unique() const;
 
@@ -31,4 +27,4 @@ private:
   int width_;
 };
 
-#endif // AOC24_MULIT_BOT_ENV_H
+#endif // AOC24_MULTI_BOT_ENV_H
