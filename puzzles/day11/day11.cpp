@@ -8,13 +8,13 @@
 unsigned long count_digits(unsigned long n) {
   if (n == 0)
     return 1;
-  return static_cast<unsigned long>(std::log10(n)) + 1;
+  return std::to_string(n).length();
 }
 
 std::pair<unsigned long, unsigned long> split_digits(unsigned long n) {
-  size_t half_digits = (static_cast<size_t>(std::log10(n)) + 1) / 2;
-  auto divisor = static_cast<unsigned long>(std::pow(10, half_digits));
-  return {n / divisor, n % divisor};
+  const auto s = std::to_string(n);
+  return {std::stol(s.substr(0, s.length() / 2)),
+          std::stol(s.substr(s.length() / 2, s.length()))};
 }
 
 size_t size_after_updates(size_t curr, int count,
