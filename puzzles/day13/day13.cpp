@@ -21,8 +21,8 @@ size_t day13_solution(const std::string &filename, Vec add_to_prize = {0, 0}) {
   size_t total = 0;
   auto txt = readFile(PARENT_DIR "/" + filename);
   for (const auto grp : split(txt, "\n\n")) {
-    auto [a, b, p] = parse_input(grp);
-    total += cost_of_prize(a, b, p + add_to_prize);
+    auto [a, b, prize] = parse_input(grp);
+    total += cost_of_prize(a, b, prize + add_to_prize);
   }
   return total;
 }
@@ -38,6 +38,10 @@ bool near_whole(double d) {
   return std::abs(d - std::round(d)) <= epsilon;
 }
 
+size_t cost(const Eigen::Vector2d &soln) {
+  return std::round(soln.x()) * 3 + std::round(soln.y());
+}
+
 size_t cost_of_prize(const Vec &dir_a, const Vec &dir_b, const Vec &prize) {
   Eigen::Matrix2d mat;
   mat << dir_a.cast<double>(), dir_b.cast<double>();
@@ -47,8 +51,8 @@ size_t cost_of_prize(const Vec &dir_a, const Vec &dir_b, const Vec &prize) {
   mat.computeInverseWithCheck(inv, invertible);
   if (not invertible)
     return 0;
-  auto soln = (inv * prize.cast<double>()).eval();
+  auto soln = inv * prize.cast<double>();
   if (near_whole(soln.x()) and near_whole(soln.y()))
-    return std::round(soln.x()) * 3 + std::round(soln.y());
+    return cost(soln);
   return 0;
 }
