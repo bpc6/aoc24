@@ -1,4 +1,4 @@
-add_executable(day14 main.cpp day14.cpp)
+add_executable(day14 main.cpp day14.cpp bot_env.cpp multi_bot_env.cpp)
 target_include_directories(day14 PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
 target_link_libraries(day14 PRIVATE aoc_lib)
 
@@ -8,6 +8,10 @@ add_executable(
         day14_test
         day14_test.cpp
         day14.cpp
+        bot_env_test.cpp
+        bot_env.cpp
+        multi_bot_env_test.cpp
+        multi_bot_env.cpp
 )
 target_link_libraries(
         day14_test

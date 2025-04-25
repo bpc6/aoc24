@@ -1,57 +1,16 @@
 #ifndef AOC24_DAY14_H
 #define AOC24_DAY14_H
 
-#include <Eigen/Dense>
 #include <string>
-#include <utility>
 
-using Vec = Eigen::Vector2i;
-
+/**
+ * Safety factor after 100 steps
+ */
 size_t part1(const std::string &filename, int width, int height);
+
+/**
+ * Step until all bots are in a unique position
+ */
 size_t part2(const std::string &filename, int width, int height);
-
-class BotEnv {
-public:
-  BotEnv(int width, int height, Vec pos, Vec velo);
-  BotEnv(int width, int height, Vec pos)
-      : BotEnv(width, height, std::move(pos), Vec(0, 0)) {}
-  void step();
-  [[nodiscard]] Vec pos() const;
-
-private:
-  void wrap_back_to_grid_();
-
-  int width_;
-  int height_;
-  Vec pos_;
-  Vec velo_;
-};
-
-BotEnv bot_env_factory(int w, int h, const std::string &s);
-
-class MultiBotEnv {
-public:
-  MultiBotEnv(int width, int height, std::initializer_list<Vec> initial)
-      : width_(width), height_(height) {
-    for (const auto &pos : initial) {
-      envs_.emplace_back(width, height, pos);
-    }
-  }
-  MultiBotEnv(int width, int height, const std::vector<std::string> &bot_states)
-      : width_(width), height_(height) {
-    for (const auto &line : bot_states) {
-      envs_.emplace_back(bot_env_factory(width, height, line));
-    }
-  }
-
-  void step();
-  int safety_factor() const;
-  [[nodiscard]] bool all_unique() const;
-
-private:
-  std::vector<BotEnv> envs_;
-  int height_;
-  int width_;
-};
 
 #endif // AOC24_DAY14_H
